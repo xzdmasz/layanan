@@ -13,60 +13,43 @@ document.addEventListener('DOMContentLoaded', function () {
     const btnPrev      = document.getElementById('btn-prev');
     const btnNext      = document.getElementById('btn-next');
     const progressBar  = document.getElementById('hero-progress');
-    const heroEl       = document.getElementById('hero');          // single declaration
-    const heroContentEl= document.querySelector('.hero-content');
-    const heroTextWrap = document.getElementById('hero-text-wrap');
+    const heroEl       = document.getElementById('hero');
 
     let currentSlide   = 0;
     let autoplayTimer  = null;
     const AUTOPLAY_MS  = 6000;
 
-    function triggerHeroTextIn() {
-        if (!heroTextWrap) return;
-        heroTextWrap.classList.remove('exit', 'animating');
-        void heroTextWrap.offsetWidth; // Force reflow so animation restarts cleanly
-        heroTextWrap.classList.add('animating');
-    }
-
     function goToSlide(index) {
         if (slides.length === 0) return;
 
-        // 1. Play exit animation on current text
-        if (heroTextWrap) {
-            heroTextWrap.classList.remove('animating');
-            heroTextWrap.classList.add('exit');
+        // Remove active class from current slide & dot
+        slides[currentSlide].classList.remove('active');
+        if (dots[currentSlide]) {
+            dots[currentSlide].classList.remove('active');
+            dots[currentSlide].setAttribute('aria-selected', 'false');
         }
 
-        // 2. After exit completes (350ms), switch slide and animate text back in
-        setTimeout(function () {
-            slides[currentSlide].classList.remove('active');
-            if (dots[currentSlide]) {
-                dots[currentSlide].classList.remove('active');
-                dots[currentSlide].setAttribute('aria-selected', 'false');
-            }
+        // Calculate next slide index
+        currentSlide = (index + slides.length) % slides.length;
 
-            currentSlide = (index + slides.length) % slides.length;
+        // Activate new slide & dot
+        slides[currentSlide].classList.add('active');
+        if (dots[currentSlide]) {
+            dots[currentSlide].classList.add('active');
+            dots[currentSlide].setAttribute('aria-selected', 'true');
+        }
 
-            slides[currentSlide].classList.add('active');
-            if (dots[currentSlide]) {
-                dots[currentSlide].classList.add('active');
-                dots[currentSlide].setAttribute('aria-selected', 'true');
-            }
+        // Update current slide number display
+        if (slideCurrent) {
+            slideCurrent.textContent = String(currentSlide + 1).padStart(2, '0');
+        }
 
-            if (slideCurrent) {
-                slideCurrent.textContent = String(currentSlide + 1).padStart(2, '0');
-            }
-
-            if (progressBar) {
-                progressBar.classList.remove('animating');
-                void progressBar.offsetWidth;
-                progressBar.classList.add('animating');
-            }
-
-            // 3. Play entrance animation
-            triggerHeroTextIn();
-
-        }, 350);
+        // Reset and trigger progress bar animation
+        if (progressBar) {
+            progressBar.classList.remove('animating');
+            void progressBar.offsetWidth; // Force reflow
+            progressBar.classList.add('animating');
+        }
     }
 
     function nextSlide() { goToSlide(currentSlide + 1); }
@@ -108,14 +91,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Initialize slider
     if (slides.length > 0) {
-        slides[0].classList.add('active');
-        if (dots[0]) { dots[0].classList.add('active'); dots[0].setAttribute('aria-selected', 'true'); }
-        if (slideCurrent) slideCurrent.textContent = '01';
-        if (progressBar) {
-            void progressBar.offsetWidth;
-            progressBar.classList.add('animating');
-        }
-        setTimeout(triggerHeroTextIn, 300);
+        goToSlide(0);
         startAutoplay();
     }
 
@@ -239,55 +215,5 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         });
     });
-
-
-    // ─────────────────────────────────────────────
-    // 7. GARAGE DOOR SCROLL LIFT EFFECT ON HERO
-    // ─────────────────────────────────────────────
-    if (heroEl) {
-        let isTicking = false;
-
-        function updateGarageDoorEffect() {
-            const scrollY    = window.scrollY;
-            const heroHeight = heroEl.offsetHeight || window.innerHeight;
-
-            if (scrollY <= heroHeight) {
-                const progress      = scrollY / heroHeight;
-                const translateY    = progress * 35;                        // lifts up to 35vh
-                const scale         = 1 - (progress * 0.04);               // slight 3D depth
-                const borderRadius  = progress * 28;                        // rounded bottom edge
-                const contentOffset = progress * 80;
-                const contentOpacity= Math.max(1 - (progress * 1.3), 0);
-
-                heroEl.style.transform    = `translate3d(0, -${translateY}vh, 0) scale(${scale})`;
-                heroEl.style.borderRadius = `0 0 ${borderRadius}px ${borderRadius}px`;
-
-                if (heroContentEl) {
-                    heroContentEl.style.transform = `translate3d(0, -${contentOffset}px, 0)`;
-                    heroContentEl.style.opacity   = contentOpacity;
-                }
-            } else {
-                // Past hero — reset so page below looks normal
-                heroEl.style.transform    = '';
-                heroEl.style.borderRadius = '';
-                if (heroContentEl) {
-                    heroContentEl.style.transform = '';
-                    heroContentEl.style.opacity   = '';
-                }
-            }
-        }
-
-        window.addEventListener('scroll', function () {
-            if (!isTicking) {
-                window.requestAnimationFrame(function () {
-                    updateGarageDoorEffect();
-                    isTicking = false;
-                });
-                isTicking = true;
-            }
-        }, { passive: true });
-
-        updateGarageDoorEffect();
-    }
 
 });

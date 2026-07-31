@@ -139,14 +139,11 @@ body {
 /* ── HERO SLIDER ── */
 #hero {
     position: relative;
-    z-index: 2;
     width: 100%;
     height: 100vh;
     min-height: 580px;
     overflow: hidden;
     background: #000000;
-    will-change: transform, border-radius;
-    transition: transform 0.05s ease-out, border-radius 0.05s ease-out;
 }
 
 /* Top gradient overlay — protects navbar area only, contained within hero */
@@ -254,77 +251,7 @@ body {
     margin: 0;
 }
 
-/* ── HERO TEXT ANIMATION ── */
-.hero-text-wrap {
-    overflow: visible;
-}
 
-/* Initial state — hidden */
-.hero-word {
-    display: inline-block;
-    opacity: 0;
-    transform: translateY(40px) skewY(2deg);
-    transition: none;
-    will-change: opacity, transform;
-}
-
-.hero-line {
-    opacity: 0;
-    transform: translateY(20px);
-    transition: none;
-    will-change: opacity, transform;
-}
-
-/* Animated state — triggered by JS adding .animating */
-.hero-text-wrap.animating .hero-word {
-    animation: heroWordIn 0.65s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-}
-
-.hero-text-wrap.animating .hero-line {
-    animation: heroLineIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-}
-
-/* Stagger delays for each word */
-.hero-text-wrap.animating .hero-word:nth-child(1)  { animation-delay: 0.05s; }
-.hero-text-wrap.animating .hero-word:nth-child(2)  { animation-delay: 0.13s; }
-.hero-text-wrap.animating .hero-word:nth-child(3)  { animation-delay: 0.21s; }
-.hero-text-wrap.animating .hero-word:nth-child(4)  { animation-delay: 0.30s; }
-.hero-text-wrap.animating .hero-word:nth-child(5)  { animation-delay: 0.38s; }
-.hero-text-wrap.animating .hero-word:nth-child(6)  { animation-delay: 0.46s; }
-.hero-text-wrap.animating .hero-word:nth-child(7)  { animation-delay: 0.54s; }
-
-.hero-text-wrap.animating .hero-line:nth-of-type(1) { animation-delay: 0.62s; }
-.hero-text-wrap.animating .hero-line:nth-of-type(2) { animation-delay: 0.74s; }
-
-/* Exit animation */
-.hero-text-wrap.exit .hero-word,
-.hero-text-wrap.exit .hero-line {
-    animation: heroTextOut 0.40s cubic-bezier(0.55, 0, 1, 0.45) forwards;
-}
-.hero-text-wrap.exit .hero-word:nth-child(1)  { animation-delay: 0s; }
-.hero-text-wrap.exit .hero-word:nth-child(2)  { animation-delay: 0.03s; }
-.hero-text-wrap.exit .hero-word:nth-child(3)  { animation-delay: 0.06s; }
-.hero-text-wrap.exit .hero-word:nth-child(4)  { animation-delay: 0.09s; }
-.hero-text-wrap.exit .hero-word:nth-child(5)  { animation-delay: 0.12s; }
-.hero-text-wrap.exit .hero-word:nth-child(6)  { animation-delay: 0.15s; }
-.hero-text-wrap.exit .hero-word:nth-child(7)  { animation-delay: 0.18s; }
-.hero-text-wrap.exit .hero-line:nth-of-type(1) { animation-delay: 0.04s; }
-.hero-text-wrap.exit .hero-line:nth-of-type(2) { animation-delay: 0.08s; }
-
-@keyframes heroWordIn {
-    0%   { opacity: 0; transform: translateY(40px) skewY(2deg); }
-    100% { opacity: 1; transform: translateY(0)    skewY(0deg); }
-}
-
-@keyframes heroLineIn {
-    0%   { opacity: 0; transform: translateY(20px); }
-    100% { opacity: 1; transform: translateY(0); }
-}
-
-@keyframes heroTextOut {
-    0%   { opacity: 1; transform: translateY(0); }
-    100% { opacity: 0; transform: translateY(-28px); }
-}
 
 /* ── SLIDE NUMBER ── */
 .slide-number {

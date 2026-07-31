@@ -17,19 +17,13 @@
     <!-- Main content -->
     <div class="hero-content">
         <div class="hero-inner">
-            <div class="hero-text-wrap" id="hero-text-wrap">
-                <h1 class="hero-title">
-                    <span class="hero-word">Sistem</span>
-                    <span class="hero-word">Pusat</span>
-                    <span class="hero-word">Layanan</span><br>
-                    <span class="hero-word">Desa</span>
-                    <span class="hero-word">Sungai</span>
-                    <span class="hero-word">Bakau</span>
-                    <span class="hero-word">Kecil</span>
-                </h1>
-                <p class="hero-quote hero-line">"Ajukan pengaduan, cek informasi, dan akses layanan desa dengan mudah melalui satu genggaman tangan."</p>
-                <p class="hero-author hero-line">Desa Sungai Bakau Kecil — Kalimantan Barat</p>
-            </div>
+            <h1 class="hero-title">
+                Sistem Pusat Layanan<br>Desa Sungai Bakau Kecil
+            </h1>
+            <p class="hero-quote">
+                "Ajukan pengaduan, cek informasi, dan akses layanan desa dengan mudah melalui satu genggaman tangan."
+            </p>
+            <p class="hero-author">Desa Sungai Bakau Kecil — Kalimantan Barat</p>
         </div>
     </div>
 
