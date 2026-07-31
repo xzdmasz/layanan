@@ -10,7 +10,6 @@
 // $registerErrors : array
 // $registerOld : array
 // $redirect : string
-// $loginSuccessMsg : string (optional)
 
 $redirectParam = $redirect ? '?redirect=' . urlencode($redirect) : '';
 ?>
@@ -43,7 +42,7 @@ $redirectParam = $redirect ? '?redirect=' . urlencode($redirect) : '';
             display: flex;
         }
 
-        /* ── FORM CONTAINERS (LEFT & RIGHT) ── */
+        /* ── FORM CONTAINERS ── */
         .form-container {
             position: absolute;
             top: 0;
@@ -58,22 +57,22 @@ $redirectParam = $redirect ? '?redirect=' . urlencode($redirect) : '';
             overflow-y: auto;
         }
 
-        /* LOGIN FORM (SIGN IN) */
+        /* LOGIN FORM (MASUK) — POSISI KANAN SAAT LOGIN MODE */
         .sign-in-container {
-            left: 0;
+            left: 50%;
             width: 50%;
             z-index: 2;
             opacity: 1;
         }
 
         .auth-container.right-panel-active .sign-in-container {
-            transform: translateX(100%);
+            transform: translateX(-100%);
             opacity: 0;
             z-index: 1;
             pointer-events: none;
         }
 
-        /* REGISTER FORM (SIGN UP) */
+        /* REGISTER FORM (DAFTAR) — POSISI KIRI SAAT REGISTER MODE */
         .sign-up-container {
             left: 0;
             width: 50%;
@@ -83,7 +82,7 @@ $redirectParam = $redirect ? '?redirect=' . urlencode($redirect) : '';
         }
 
         .auth-container.right-panel-active .sign-up-container {
-            transform: translateX(100%);
+            transform: translateX(0);
             opacity: 1;
             z-index: 5;
             pointer-events: auto;
@@ -262,7 +261,7 @@ $redirectParam = $redirect ? '?redirect=' . urlencode($redirect) : '';
         .overlay-container {
             position: absolute;
             top: 0;
-            left: 50%;
+            left: 0; /* POSISI KIRI SAAT LOGIN MODE */
             width: 50%;
             height: 100%;
             overflow: hidden;
@@ -270,15 +269,16 @@ $redirectParam = $redirect ? '?redirect=' . urlencode($redirect) : '';
             z-index: 100;
         }
 
+        /* SAAT REGISTER MODE: OVERLAY SLIDE KE KANAN (50% TO 100%) */
         .auth-container.right-panel-active .overlay-container {
-            transform: translateX(-100%);
+            transform: translateX(100%);
         }
 
         .overlay {
             background: #0f172a;
             color: #ffffff;
             position: relative;
-            left: -100%;
+            left: 0;
             height: 100%;
             width: 200%;
             transform: translateX(0);
@@ -286,7 +286,7 @@ $redirectParam = $redirect ? '?redirect=' . urlencode($redirect) : '';
         }
 
         .auth-container.right-panel-active .overlay {
-            transform: translateX(50%);
+            transform: translateX(-50%);
         }
 
         .overlay-panel {
@@ -301,22 +301,24 @@ $redirectParam = $redirect ? '?redirect=' . urlencode($redirect) : '';
             transition: transform 0.65s cubic-bezier(0.65, 0, 0.35, 1);
         }
 
+        /* OVERLAY LEFT — BANNER LOGIN (bg2.png) TAMPIL DI KIRI SAAT LOGIN MODE */
         .overlay-left {
             left: 0;
-            transform: translateX(-20%);
+            transform: translateX(0);
         }
 
         .auth-container.right-panel-active .overlay-left {
-            transform: translateX(0);
+            transform: translateX(-20%);
         }
 
+        /* OVERLAY RIGHT — BANNER REGISTER (bg3.png) TAMPIL DI KANAN SAAT REGISTER MODE */
         .overlay-right {
-            right: 0;
-            transform: translateX(0);
+            left: 50%;
+            transform: translateX(20%);
         }
 
         .auth-container.right-panel-active .overlay-right {
-            transform: translateX(20%);
+            transform: translateX(0);
         }
 
         /* Background Images for Overlay Panels */
@@ -464,7 +466,7 @@ $redirectParam = $redirect ? '?redirect=' . urlencode($redirect) : '';
                 position: relative;
             }
             .overlay-container {
-                display: none; /* Hide sliding overlay on mobile, show clean static form */
+                display: none; /* Mobile modal view */
             }
             .form-container {
                 position: relative;
@@ -506,7 +508,7 @@ $redirectParam = $redirect ? '?redirect=' . urlencode($redirect) : '';
 
 <div class="auth-container <?= ($activeMode === 'register') ? 'right-panel-active' : '' ?>" id="auth-container">
 
-    <!-- 1. SIGN IN FORM (LOGIN) -->
+    <!-- 1. SIGN IN FORM (LOGIN) — FORM MASUK DI SEBELAH KANAN -->
     <div class="form-container sign-in-container">
         <!-- Mobile Top Header -->
         <div class="auth-mobile-header">
@@ -573,7 +575,7 @@ $redirectParam = $redirect ? '?redirect=' . urlencode($redirect) : '';
         </div>
     </div>
 
-    <!-- 2. SIGN UP FORM (REGISTER) -->
+    <!-- 2. SIGN UP FORM (REGISTER) — FORM DAFTAR DI SEBELAH KIRI -->
     <div class="form-container sign-up-container">
         <!-- Mobile Top Header -->
         <div class="auth-mobile-header">
@@ -663,7 +665,7 @@ $redirectParam = $redirect ? '?redirect=' . urlencode($redirect) : '';
     <div class="overlay-container">
         <div class="overlay">
 
-            <!-- OVERLAY LEFT (Tampil saat mode Register untuk slide kembali ke Login) -->
+            <!-- OVERLAY LEFT (BG2.png) — TAMPIL DI KIRI SAAT LOGIN MODE -->
             <div class="overlay-panel overlay-left">
                 <div class="overlay-bg bg-login-img"></div>
                 <div class="overlay-dark-mask"></div>
@@ -684,18 +686,18 @@ $redirectParam = $redirect ? '?redirect=' . urlencode($redirect) : '';
                     </div>
 
                     <div class="auth-hero-bottom">
-                        <h1 class="auth-hero-title">Sudah Memiliki Akun Warga?</h1>
+                        <h1 class="auth-hero-title">Sistem Pusat Layanan &amp; Pengaduan Warga Desa</h1>
                         <p class="auth-hero-desc">
-                            Silakan masuk menggunakan nomor HP &amp; password Anda untuk melanjutkan akses ke layanan pengaduan kesehatan dan bantuan hukum desa.
+                            Bergabunglah dengan portal digital Desa Sungai Bakau Kecil untuk menyampaikan laporan pengaduan penyakit lingkungan dan konsultasi hukum dengan cepat, aman, dan transparan.
                         </p>
-                        <button type="button" class="overlay-ghost-btn js-switch-btn" data-target="login">
-                            ← Masuk Sekarang
+                        <button type="button" class="overlay-ghost-btn js-switch-btn" data-target="register">
+                            Daftar Sekarang →
                         </button>
                     </div>
                 </div>
             </div>
 
-            <!-- OVERLAY RIGHT (Tampil saat mode Login untuk slide ke Register) -->
+            <!-- OVERLAY RIGHT (BG3.png) — TAMPIL DI KANAN SAAT REGISTER MODE -->
             <div class="overlay-panel overlay-right">
                 <div class="overlay-bg bg-register-img"></div>
                 <div class="overlay-dark-mask"></div>
@@ -720,8 +722,8 @@ $redirectParam = $redirect ? '?redirect=' . urlencode($redirect) : '';
                         <p class="auth-hero-desc">
                             Daftarkan akun Anda hanya dalam beberapa langkah untuk mulai memanfaatkan layanan publik desa, pengaduan kesehatan, dan konsultasi hukum.
                         </p>
-                        <button type="button" class="overlay-ghost-btn js-switch-btn" data-target="register">
-                            Daftar Sekarang →
+                        <button type="button" class="overlay-ghost-btn js-switch-btn" data-target="login">
+                            ← Masuk Sekarang
                         </button>
                     </div>
                 </div>
