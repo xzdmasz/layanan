@@ -1314,15 +1314,41 @@ body {
         transform: translateY(0);
     }
 
-    /* ── HERO ── */
-    .hero-inner   { padding: 0 20px; }
-    .hero-title   { font-size: clamp(1.85rem, 7.5vw, 2.8rem); }
-    .hero-quote   { font-size: 13px; max-width: 100%; }
-    .hero-content { padding-bottom: 80px; }
-    .slide-number { left: 20px; bottom: 36px; }
-    .slide-nav    { right: 20px; bottom: 28px; }
-    .follow-us    { right: 20px; bottom: 78px; }
+    /* ── HERO MOBILE ADJUSTMENTS ── */
+    #hero {
+        height: calc(100dvh - 56px);
+        min-height: 500px;
+        max-height: 720px;
+    }
+    .hero-content {
+        padding-top: 64px;
+        padding-bottom: 74px;
+        justify-content: center;
+    }
+    .hero-inner   { padding: 0 24px; }
+    .hero-title   {
+        font-size: clamp(1.7rem, 6.5vw, 2.35rem);
+        line-height: 1.18;
+        margin-bottom: 12px;
+        text-shadow: 0 2px 18px rgba(0,0,0,0.6);
+    }
+    .hero-quote   {
+        font-size: 13px;
+        line-height: 1.55;
+        max-width: 100%;
+        margin-bottom: 8px;
+        color: rgba(255,255,255,0.88);
+    }
+    .hero-author {
+        font-size: 10.5px;
+        letter-spacing: 0.12em;
+        color: rgba(255,255,255,0.65);
+    }
+    .slide-number { left: 24px; bottom: 24px; font-size: 12px; }
+    .slide-dots   { bottom: 28px; }
+    .slide-nav    { right: 20px; bottom: 18px; }
     .hero-progress-wrap { display: none; }
+
 
     /* ── STATS — 2×2 ── */
     .stats-section > .container > div {
