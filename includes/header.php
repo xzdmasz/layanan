@@ -169,7 +169,7 @@ $currentPage = basename($_SERVER['PHP_SELF']);
 ?>
 <nav class="mobile-bottom-nav" aria-label="Navigasi Bawah">
     <a href="index.php" class="bottom-nav-item <?= ($currentPage === 'index.php') ? 'active' : '' ?>">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
             <polyline points="9 22 9 12 15 12 15 22"/>
         </svg>
@@ -177,21 +177,21 @@ $currentPage = basename($_SERVER['PHP_SELF']);
     </a>
 
     <a href="layanan-pengaduan.php" class="bottom-nav-item <?= ($currentPage === 'layanan-pengaduan.php') ? 'active' : '' ?>">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
         </svg>
         <span>Kesehatan</span>
     </a>
 
     <a href="layanan-hukum.php" class="bottom-nav-item <?= ($currentPage === 'layanan-hukum.php') ? 'active' : '' ?>">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
         </svg>
         <span>Hukum</span>
     </a>
 
     <a href="<?= isLoggedIn() ? 'riwayat.php' : 'login.php?redirect=riwayat.php' ?>" class="bottom-nav-item <?= ($currentPage === 'riwayat.php') ? 'active' : '' ?>">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
             <polyline points="14 2 14 8 20 8"/>
             <line x1="16" y1="13" x2="8" y2="13"/>
@@ -202,7 +202,7 @@ $currentPage = basename($_SERVER['PHP_SELF']);
 
     <?php if (isLoggedIn()): ?>
         <a href="akun.php" class="bottom-nav-item <?= ($currentPage === 'akun.php') ? 'active' : '' ?>">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
                 <circle cx="12" cy="7" r="4"/>
             </svg>
@@ -210,7 +210,7 @@ $currentPage = basename($_SERVER['PHP_SELF']);
         </a>
     <?php else: ?>
         <a href="login.php" class="bottom-nav-item <?= ($currentPage === 'login.php' || $currentPage === 'register.php') ? 'active' : '' ?>">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/>
                 <polyline points="10 17 15 12 10 7"/>
                 <line x1="15" y1="12" x2="3" y2="12"/>
