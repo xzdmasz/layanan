@@ -83,24 +83,34 @@ require_once 'includes/header.php';
      ANNOUNCEMENT BAR
      ====================================================== -->
 <div class="announce-bar" aria-label="Informasi Layanan">
-    <div class="ticker-track" id="ticker">
-        <span>Layanan konsultasi hukum tersedia setiap Senin–Jumat pukul 09.00–15.00 WIB</span>
-        <span class="ticker-sep">|</span>
-        <span>Posyandu Balita: 5 Agustus 2025, Pukul 09.00 WIB di Balai Desa</span>
-        <span class="ticker-sep">|</span>
-        <span>Pelaporan masalah kesehatan lingkungan kini tersedia secara online</span>
-        <span class="ticker-sep">|</span>
-        <span>Konsultasi hukum gratis untuk warga — Daftar sekarang tanpa biaya</span>
-        <span class="ticker-sep">|</span>
-        <!-- Duplicate for seamless loop -->
-        <span>Layanan konsultasi hukum tersedia setiap Senin–Jumat pukul 09.00–15.00 WIB</span>
-        <span class="ticker-sep">|</span>
-        <span>Posyandu Balita: 5 Agustus 2025, Pukul 09.00 WIB di Balai Desa</span>
-        <span class="ticker-sep">|</span>
-        <span>Pelaporan masalah kesehatan lingkungan kini tersedia secara online</span>
-        <span class="ticker-sep">|</span>
-        <span>Konsultasi hukum gratis untuk warga — Daftar sekarang tanpa biaya</span>
-        <span class="ticker-sep">|</span>
+    <!-- Label kiri -->
+    <div class="announce-label">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
+        </svg>
+        Pengumuman
+    </div>
+    <!-- Ticker scroll kanan -->
+    <div class="announce-ticker-wrap">
+        <div class="ticker-track" id="ticker">
+            <span>Layanan konsultasi hukum tersedia setiap Senin–Jumat pukul 09.00–15.00 WIB</span>
+            <span class="ticker-sep">|</span>
+            <span>Posyandu Balita: 5 Agustus 2025, Pukul 09.00 WIB di Balai Desa</span>
+            <span class="ticker-sep">|</span>
+            <span>Pelaporan masalah kesehatan lingkungan kini tersedia secara online</span>
+            <span class="ticker-sep">|</span>
+            <span>Konsultasi hukum gratis untuk warga — Daftar sekarang tanpa biaya</span>
+            <span class="ticker-sep">|</span>
+            <!-- Duplicate for seamless loop -->
+            <span>Layanan konsultasi hukum tersedia setiap Senin–Jumat pukul 09.00–15.00 WIB</span>
+            <span class="ticker-sep">|</span>
+            <span>Posyandu Balita: 5 Agustus 2025, Pukul 09.00 WIB di Balai Desa</span>
+            <span class="ticker-sep">|</span>
+            <span>Pelaporan masalah kesehatan lingkungan kini tersedia secara online</span>
+            <span class="ticker-sep">|</span>
+            <span>Konsultasi hukum gratis untuk warga — Daftar sekarang tanpa biaya</span>
+            <span class="ticker-sep">|</span>
+        </div>
     </div>
 </div>
 
