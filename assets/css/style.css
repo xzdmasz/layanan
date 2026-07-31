@@ -386,7 +386,6 @@ body {
     background-position: center center;
     opacity: 0;
     transition: opacity 1.4s cubic-bezier(0.4, 0, 0.2, 1);
-    will-change: opacity;
 }
 
 .slide.active { opacity: 1; z-index: 2; }
@@ -1446,18 +1445,20 @@ body {
     /* ── MOBILE BOTTOM NAVIGATION BAR (Strictly Mobile <= 768px) ── */
     body { padding-bottom: 64px; }
 
-    /* ── STABLE HERO ON MOBILE (Prevents zoom/shift when scrolling down) ── */
+    /* ── HERO ON MOBILE: prevent zoom & keep smooth ── */
     #hero {
-        height: 85vh !important;
-        height: 85svh !important;
-        min-height: 480px !important;
-        max-height: 620px !important;
+        height: 88svh !important;
+        height: 88vh !important;
+        min-height: 460px !important;
+        max-height: 640px !important;
     }
 
+    /* Disable GPU-heavy hints on mobile slides to prevent lag */
     .slide {
         background-attachment: scroll !important;
-        transform: none !important;
-        will-change: opacity !important;
+        will-change: auto !important;
+        transform: translateZ(0) !important;
+        -webkit-transform: translateZ(0) !important;
     }
 
     /* Hide desktop nav LINKS only — profile/auth button stays in top navbar */
