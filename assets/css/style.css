@@ -1445,12 +1445,12 @@ body {
     /* ── MOBILE BOTTOM NAVIGATION BAR (Strictly Mobile <= 768px) ── */
     body { padding-bottom: 64px; }
 
-    /* ── HERO ON MOBILE: prevent zoom & keep smooth ── */
+    /* ── HERO ON MOBILE: fill screen, nothing below peeking ── */
     #hero {
-        height: 80svh !important;
-        height: 80vh !important;
-        min-height: 420px !important;
-        max-height: 580px !important;
+        height: calc(100svh - 64px) !important;
+        height: calc(100vh - 64px) !important;
+        min-height: 460px !important;
+        max-height: none !important;
     }
 
     /* Disable GPU-heavy hints on mobile slides to prevent lag */
