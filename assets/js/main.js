@@ -290,4 +290,56 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
+
+    // ─────────────────────────────────────────────
+    // 9. LOGOUT CONFIRMATION MODAL
+    // ─────────────────────────────────────────────
+    const logoutModal     = document.getElementById('logoutModal');
+    const btnCancelLogout = document.getElementById('btnCancelLogout');
+
+    function showLogoutModal(targetUrl) {
+        if (!logoutModal) return;
+        const confirmBtn = document.getElementById('btnConfirmLogout');
+        if (confirmBtn && targetUrl) {
+            confirmBtn.href = targetUrl;
+        }
+        logoutModal.classList.add('open');
+        logoutModal.setAttribute('aria-hidden', 'false');
+    }
+
+    function closeLogoutModal() {
+        if (!logoutModal) return;
+        logoutModal.classList.remove('open');
+        logoutModal.setAttribute('aria-hidden', 'true');
+    }
+
+    // Intercept all logout links
+    document.addEventListener('click', function (e) {
+        const logoutLink = e.target.closest('a[href*="logout.php"], .profile-dropdown-logout');
+        if (logoutLink) {
+            e.preventDefault();
+            const href = logoutLink.getAttribute('href') || 'logout.php';
+            showLogoutModal(href);
+        }
+    });
+
+    if (btnCancelLogout) {
+        btnCancelLogout.addEventListener('click', closeLogoutModal);
+    }
+
+    if (logoutModal) {
+        logoutModal.addEventListener('click', function (e) {
+            if (e.target === logoutModal) {
+                closeLogoutModal();
+            }
+        });
+    }
+
+    document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && logoutModal && logoutModal.classList.contains('open')) {
+            closeLogoutModal();
+        }
+    });
+
 });
+

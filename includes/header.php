@@ -64,12 +64,36 @@ require_once __DIR__ . '/db.php';
 
                 <div class="dropdown-panel" id="layanan-menu" role="menu" aria-label="Sub-menu Layanan">
                     <a href="layanan-pengaduan.php" class="dropdown-item" role="menuitem">
-                        <span class="item-label">Layanan &amp; Pengaduan Penyakit</span>
-                        <span class="item-desc">Laporkan masalah kesehatan di lingkungan desa</span>
+                        <div class="dropdown-item-icon icon-kesehatan">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
+                            </svg>
+                        </div>
+                        <div class="dropdown-item-body">
+                            <span class="item-label">Layanan &amp; Pengaduan Kesehatan</span>
+                            <span class="item-desc">Laporkan masalah kesehatan &amp; lingkungan desa</span>
+                        </div>
+                        <div class="dropdown-item-arrow">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="9 18 15 12 9 6"/>
+                            </svg>
+                        </div>
                     </a>
                     <a href="layanan-hukum.php" class="dropdown-item" role="menuitem">
-                        <span class="item-label">Layanan Hukum</span>
-                        <span class="item-desc">Konsultasi dan bantuan hukum untuk warga</span>
+                        <div class="dropdown-item-icon icon-hukum">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                            </svg>
+                        </div>
+                        <div class="dropdown-item-body">
+                            <span class="item-label">Konsultasi &amp; Bantuan Hukum</span>
+                            <span class="item-desc">Konsultasi gratis &amp; bantuan hukum warga</span>
+                        </div>
+                        <div class="dropdown-item-arrow">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="9 18 15 12 9 6"/>
+                            </svg>
+                        </div>
                     </a>
                 </div>
             </div>

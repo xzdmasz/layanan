@@ -84,6 +84,25 @@
     </div>
 </footer>
 
+<!-- ===== MODAL KONFIRMASI LOGOUT ===== -->
+<div class="logout-modal-backdrop" id="logoutModal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="logoutModalTitle">
+    <div class="logout-modal-card">
+        <div class="logout-modal-icon">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+                <polyline points="16 17 21 12 16 7"/>
+                <line x1="21" y1="12" x2="9" y2="12"/>
+            </svg>
+        </div>
+        <h3 class="logout-modal-title" id="logoutModalTitle">Konfirmasi Keluar</h3>
+        <p class="logout-modal-desc">Apakah Anda yakin ingin keluar dari akun Anda?</p>
+        <div class="logout-modal-actions">
+            <button type="button" class="logout-btn-cancel" id="btnCancelLogout">Batal</button>
+            <a href="logout.php" class="logout-btn-confirm" id="btnConfirmLogout">Ya, Keluar</a>
+        </div>
+    </div>
+</div>
+
 <!-- ===== BACK TO TOP BUTTON ===== -->
 <button id="back-to-top" aria-label="Kembali ke atas" title="Kembali ke atas">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
