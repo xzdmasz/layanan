@@ -81,9 +81,13 @@ require_once __DIR__ . '/db.php';
             <?php if (isLoggedIn()): ?>
                 <div class="profile-menu-wrap" id="profile-menu-wrap">
                     <button class="profile-icon-btn" id="profile-icon-btn" aria-expanded="false" aria-haspopup="true" aria-label="Menu profil">
-                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
                             <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
                             <circle cx="12" cy="7" r="4"/>
+                        </svg>
+                        <span class="profile-btn-name"><?= htmlspecialchars(explode(' ', getUser()['nama_lengkap'])[0]) ?></span>
+                        <svg class="profile-btn-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="6 9 12 15 18 9"/>
                         </svg>
                     </button>
                     <div class="profile-dropdown" id="profile-dropdown" role="menu" aria-hidden="true">

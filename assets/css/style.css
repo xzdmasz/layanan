@@ -95,23 +95,42 @@ body {
 }
 
 .profile-icon-btn {
-    width: 38px;
     height: 38px;
-    border-radius: 50%;
+    padding: 0 14px 0 10px;
+    border-radius: 20px;
     background: rgba(255,255,255,0.10);
     border: 1.5px solid rgba(255,255,255,0.20);
     color: #ffffff;
     cursor: pointer;
-    display: flex;
+    display: inline-flex;
     align-items: center;
-    justify-content: center;
+    gap: 8px;
     transition: background 0.2s, border-color 0.2s;
-    padding: 0;
 }
 .profile-icon-btn:hover,
 .profile-icon-btn[aria-expanded="true"] {
     background: rgba(255,255,255,0.18);
     border-color: rgba(255,255,255,0.45);
+}
+
+.profile-btn-name {
+    font-size: 12.5px;
+    font-weight: 600;
+    color: #ffffff;
+    letter-spacing: 0.02em;
+    max-width: 120px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.profile-btn-chevron {
+    color: rgba(255,255,255,0.60);
+    transition: transform 0.2s;
+}
+
+.profile-icon-btn[aria-expanded="true"] .profile-btn-chevron {
+    transform: rotate(180deg);
 }
 
 /* ── Profile dropdown panel ── */
