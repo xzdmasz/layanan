@@ -63,60 +63,23 @@ require_once __DIR__ . '/db.php';
                 </button>
 
                 <div class="dropdown-panel" id="layanan-menu" role="menu" aria-label="Sub-menu Layanan">
-                    <!-- Dropdown Header Label -->
-                    <div class="dropdown-header-label">
-                        <span>Pilih Jenis Layanan</span>
-                    </div>
-
-                    <!-- Option 1: Kesehatan -->
-                    <a href="layanan-pengaduan.php" class="dropdown-item dropdown-item-kesehatan" role="menuitem">
-                        <div class="dropdown-item-icon icon-kesehatan">
-                            <!-- Stethoscope Vector SVG -->
-                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M4.8 2.3A.3.3 0 0 0 4.5 2h-1a.5.5 0 0 0-.5.5V9a5 5 0 0 0 10 0V2.5a.5.5 0 0 0-.5-.5h-1a.3.3 0 0 0-.3.3v6.7a3.2 3.2 0 0 1-6.4 0V2.3z"/>
-                                <path d="M8 14v1a5 5 0 0 0 10 0v-3"/>
-                                <circle cx="18" cy="10" r="2.5" fill="currentColor"/>
-                            </svg>
-                        </div>
-                        <div class="dropdown-item-body">
-                            <div class="item-badge-wrap">
-                                <span class="item-badge badge-kesehatan"><span class="dot-pulse"></span>Kesehatan &amp; Lingkungan</span>
-                            </div>
-                            <span class="item-label">Layanan &amp; Pengaduan</span>
+                    <a href="layanan-pengaduan.php" class="dropdown-item" role="menuitem">
+                        <div class="dropdown-item-content">
+                            <span class="item-label">Layanan &amp; Pengaduan Kesehatan</span>
                             <span class="item-desc">Laporkan masalah kesehatan &amp; lingkungan desa</span>
                         </div>
-                        <div class="dropdown-item-arrow">
-                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                                <polyline points="9 18 15 12 9 6"/>
-                            </svg>
-                        </div>
+                        <svg class="dropdown-item-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="9 18 15 12 9 6"/>
+                        </svg>
                     </a>
-
-                    <!-- Option 2: Hukum -->
-                    <a href="layanan-hukum.php" class="dropdown-item dropdown-item-hukum" role="menuitem">
-                        <div class="dropdown-item-icon icon-hukum">
-                            <!-- Scales of Justice (Timbangan) Vector SVG -->
-                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M12 3v17"/>
-                                <path d="M5 20h14"/>
-                                <path d="M4 7h16"/>
-                                <path d="M4 7l-2 5c0 1.7 1.3 3 3 3s3-1.3 3-3L6 7"/>
-                                <path d="M20 7l-2 5c0 1.7 1.3 3 3 3s3-1.3 3-3L18 7"/>
-                                <circle cx="12" cy="3" r="1.5" fill="currentColor"/>
-                            </svg>
+                    <a href="layanan-hukum.php" class="dropdown-item" role="menuitem">
+                        <div class="dropdown-item-content">
+                            <span class="item-label">Layanan Hukum</span>
+                            <span class="item-desc">Konsultasi dan bantuan hukum untuk warga</span>
                         </div>
-                        <div class="dropdown-item-body">
-                            <div class="item-badge-wrap">
-                                <span class="item-badge badge-hukum"><span class="dot-pulse"></span>Konsultasi Gratis</span>
-                            </div>
-                            <span class="item-label">Bantuan &amp; Konsultasi Hukum</span>
-                            <span class="item-desc">Konsultasi gratis &amp; bantuan hukum warga</span>
-                        </div>
-                        <div class="dropdown-item-arrow">
-                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                                <polyline points="9 18 15 12 9 6"/>
-                            </svg>
-                        </div>
+                        <svg class="dropdown-item-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="9 18 15 12 9 6"/>
+                        </svg>
                     </a>
                 </div>
             </div>
