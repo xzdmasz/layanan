@@ -1447,10 +1447,10 @@ body {
 
     /* ── HERO ON MOBILE: prevent zoom & keep smooth ── */
     #hero {
-        height: 88svh !important;
-        height: 88vh !important;
-        min-height: 460px !important;
-        max-height: 640px !important;
+        height: 80svh !important;
+        height: 80vh !important;
+        min-height: 420px !important;
+        max-height: 580px !important;
     }
 
     /* Disable GPU-heavy hints on mobile slides to prevent lag */
