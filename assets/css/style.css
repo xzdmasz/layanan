@@ -277,15 +277,15 @@ body {
 
 /* Hover state: clearly highlighted */
 .dropdown-item:hover {
-    background: #1e40af;
-    border-color: #1e40af;
+    background: #1e293b;
+    border-color: #1e293b;
     color: #ffffff;
     transform: translateX(3px);
-    box-shadow: 0 6px 18px -4px rgba(30, 64, 175, 0.35);
+    box-shadow: 0 6px 18px -4px rgba(0, 0, 0, 0.30);
 }
 
 .dropdown-item:hover .dropdown-item-arrow {
-    color: rgba(255,255,255,0.9);
+    color: rgba(255,255,255,0.8);
     transform: translateX(3px);
 }
 
@@ -293,7 +293,7 @@ body {
 .dropdown-item:active {
     transform: scale(0.975) translateX(2px) !important;
     box-shadow: 0 2px 8px rgba(0,0,0,0.15) !important;
-    background: #1d3a9f !important;
+    background: #0f172a !important;
 }
 
 /* Focus (keyboard) */
