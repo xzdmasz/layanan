@@ -13,18 +13,18 @@ document.addEventListener('DOMContentLoaded', function () {
     const btnPrev      = document.getElementById('btn-prev');
     const btnNext      = document.getElementById('btn-next');
     const progressBar  = document.getElementById('hero-progress');
+    const heroEl       = document.getElementById('hero');          // single declaration
+    const heroContentEl= document.querySelector('.hero-content');
+    const heroTextWrap = document.getElementById('hero-text-wrap');
 
     let currentSlide   = 0;
     let autoplayTimer  = null;
     const AUTOPLAY_MS  = 6000;
 
-    const heroTextWrap = document.getElementById('hero-text-wrap');
-
     function triggerHeroTextIn() {
         if (!heroTextWrap) return;
         heroTextWrap.classList.remove('exit', 'animating');
-        // Force reflow so animation restarts cleanly
-        void heroTextWrap.offsetWidth;
+        void heroTextWrap.offsetWidth; // Force reflow so animation restarts cleanly
         heroTextWrap.classList.add('animating');
     }
 
@@ -39,29 +39,24 @@ document.addEventListener('DOMContentLoaded', function () {
 
         // 2. After exit completes (350ms), switch slide and animate text back in
         setTimeout(function () {
-            // Remove active class from current slide & dot
             slides[currentSlide].classList.remove('active');
             if (dots[currentSlide]) {
                 dots[currentSlide].classList.remove('active');
                 dots[currentSlide].setAttribute('aria-selected', 'false');
             }
 
-            // Calculate next slide index
             currentSlide = (index + slides.length) % slides.length;
 
-            // Activate new slide & dot
             slides[currentSlide].classList.add('active');
             if (dots[currentSlide]) {
                 dots[currentSlide].classList.add('active');
                 dots[currentSlide].setAttribute('aria-selected', 'true');
             }
 
-            // Update slide number display
             if (slideCurrent) {
                 slideCurrent.textContent = String(currentSlide + 1).padStart(2, '0');
             }
 
-            // Reset and trigger progress bar animation
             if (progressBar) {
                 progressBar.classList.remove('animating');
                 void progressBar.offsetWidth;
@@ -100,7 +95,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Touch / Swipe support
     let touchStartX = 0;
-    const heroEl = document.getElementById('hero');
     if (heroEl) {
         heroEl.addEventListener('touchstart', e => { touchStartX = e.changedTouches[0].clientX; }, { passive: true });
         heroEl.addEventListener('touchend', e => {
@@ -114,15 +108,13 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Initialize slider
     if (slides.length > 0) {
-        // Direct init: activate slide 0 without exit animation
         slides[0].classList.add('active');
-        if (dots[0]) { dots[0].classList.add('active'); dots[0].setAttribute('aria-selected','true'); }
+        if (dots[0]) { dots[0].classList.add('active'); dots[0].setAttribute('aria-selected', 'true'); }
         if (slideCurrent) slideCurrent.textContent = '01';
         if (progressBar) {
             void progressBar.offsetWidth;
             progressBar.classList.add('animating');
         }
-        // Trigger hero text entrance after a short delay
         setTimeout(triggerHeroTextIn, 300);
         startAutoplay();
     }
@@ -141,17 +133,17 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     window.addEventListener('scroll', updateNavbar, { passive: true });
-    updateNavbar(); // Check initial scroll position
+    updateNavbar();
 
 
     // ─────────────────────────────────────────────
     // 3. MOBILE MENU TOGGLE
     // ─────────────────────────────────────────────
-    const hamburger       = document.getElementById('hamburger');
-    const mobileMenu      = document.getElementById('mobile-menu');
-    const mobileLayananBtn= document.getElementById('mobile-layanan-btn');
-    const mobileLayananSub= document.getElementById('mobile-layanan-sub');
-    const mobileChevron   = document.getElementById('mobile-layanan-chevron');
+    const hamburger        = document.getElementById('hamburger');
+    const mobileMenu       = document.getElementById('mobile-menu');
+    const mobileLayananBtn = document.getElementById('mobile-layanan-btn');
+    const mobileLayananSub = document.getElementById('mobile-layanan-sub');
+    const mobileChevron    = document.getElementById('mobile-layanan-chevron');
 
     if (hamburger && mobileMenu) {
         hamburger.addEventListener('click', function () {
@@ -240,7 +232,7 @@ document.addEventListener('DOMContentLoaded', function () {
             const isExpanded = this.getAttribute('aria-expanded') === 'true';
             this.setAttribute('aria-expanded', !isExpanded);
             this.classList.toggle('active');
-            
+
             const body = this.nextElementSibling;
             if (body && body.classList.contains('accordion-body')) {
                 body.classList.toggle('open');
@@ -248,39 +240,40 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
+
     // ─────────────────────────────────────────────
     // 7. GARAGE DOOR SCROLL LIFT EFFECT ON HERO
     // ─────────────────────────────────────────────
-    const heroEl = document.getElementById('hero');
-    const heroContentEl = document.querySelector('.hero-content');
-
     if (heroEl) {
         let isTicking = false;
 
         function updateGarageDoorEffect() {
-            const scrollY = window.scrollY;
+            const scrollY    = window.scrollY;
             const heroHeight = heroEl.offsetHeight || window.innerHeight;
 
-            if (scrollY <= heroHeight * 1.2) {
-                const progress = Math.min(scrollY / heroHeight, 1);
-                
-                // Lift hero upwards like a garage door opening into top ceiling
-                const translateY = progress * 60; // Lifts up to 60vh
-                const scale = 1 - (progress * 0.05); // Subtle 3D depth shrink
-                const borderRadius = progress * 36; // Curving bottom edge like rolling shutter
-                const contentOffset = progress * 100;
-                const contentOpacity = Math.max(1 - (progress * 1.4), 0);
+            if (scrollY <= heroHeight) {
+                const progress      = scrollY / heroHeight;
+                const translateY    = progress * 35;                        // lifts up to 35vh
+                const scale         = 1 - (progress * 0.04);               // slight 3D depth
+                const borderRadius  = progress * 28;                        // rounded bottom edge
+                const contentOffset = progress * 80;
+                const contentOpacity= Math.max(1 - (progress * 1.3), 0);
 
-                heroEl.style.transform = `translate3d(0, -${translateY}vh, 0) scale(${scale})`;
+                heroEl.style.transform    = `translate3d(0, -${translateY}vh, 0) scale(${scale})`;
                 heroEl.style.borderRadius = `0 0 ${borderRadius}px ${borderRadius}px`;
 
                 if (heroContentEl) {
                     heroContentEl.style.transform = `translate3d(0, -${contentOffset}px, 0)`;
-                    heroContentEl.style.opacity = contentOpacity;
+                    heroContentEl.style.opacity   = contentOpacity;
                 }
             } else {
-                heroEl.style.transform = `translate3d(0, -60vh, 0) scale(0.95)`;
-                heroEl.style.borderRadius = `0 0 36px 36px`;
+                // Past hero — reset so page below looks normal
+                heroEl.style.transform    = '';
+                heroEl.style.borderRadius = '';
+                if (heroContentEl) {
+                    heroContentEl.style.transform = '';
+                    heroContentEl.style.opacity   = '';
+                }
             }
         }
 
@@ -294,9 +287,7 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         }, { passive: true });
 
-        // Initial run
         updateGarageDoorEffect();
     }
 
 });
-
