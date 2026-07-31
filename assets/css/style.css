@@ -234,12 +234,12 @@ body {
     top: calc(100% + 12px);
     left: 0;
     width: 350px;
-    background: rgba(15, 23, 42, 0.88);
+    background: rgba(0, 0, 0, 0.82);
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
     border-radius: 14px;
-    border: 1px solid rgba(255, 255, 255, 0.14);
-    box-shadow: 0 20px 48px -10px rgba(0, 0, 0, 0.60), 0 4px 16px rgba(0, 0, 0, 0.35);
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    box-shadow: 0 20px 50px -10px rgba(0, 0, 0, 0.75), 0 4px 16px rgba(0, 0, 0, 0.4);
     opacity: 0;
     visibility: hidden;
     transform: translateY(-8px);
@@ -262,7 +262,7 @@ body {
     align-items: center;
     gap: 14px;
     padding: 14px 14px;
-    color: #f8fafc;
+    color: #ffffff;
     text-decoration: none;
     border-radius: 10px;
     border-left: 3px solid transparent;
@@ -276,8 +276,8 @@ body {
 
 .dropdown-item:hover,
 .dropdown-item:focus {
-    background: rgba(255, 255, 255, 0.10);
-    border-left-color: #38bdf8;
+    background: rgba(255, 255, 255, 0.14);
+    border-left-color: #ffffff;
     transform: translateX(3px);
 }
 
@@ -285,9 +285,9 @@ body {
     width: 40px;
     height: 40px;
     border-radius: 10px;
-    background: rgba(255, 255, 255, 0.08);
-    color: #38bdf8;
-    border: 1px solid rgba(255, 255, 255, 0.12);
+    background: rgba(255, 255, 255, 0.10);
+    color: #ffffff;
+    border: 1px solid rgba(255, 255, 255, 0.18);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -296,11 +296,11 @@ body {
 }
 
 .dropdown-item:hover .dropdown-item-icon {
-    background: #38bdf8;
-    color: #0f172a;
-    border-color: #38bdf8;
+    background: #ffffff;
+    color: #000000;
+    border-color: #ffffff;
     transform: scale(1.06);
-    box-shadow: 0 4px 14px rgba(56, 189, 248, 0.35);
+    box-shadow: 0 4px 14px rgba(255, 255, 255, 0.25);
 }
 
 .dropdown-item-body {
@@ -321,12 +321,12 @@ body {
 }
 
 .dropdown-item:hover .item-label {
-    color: #38bdf8;
+    color: #ffffff;
 }
 
 .dropdown-item .item-desc {
     font-size: 11.5px;
-    color: rgba(255, 255, 255, 0.65);
+    color: rgba(255, 255, 255, 0.70);
     font-weight: 400;
     line-height: 1.45;
     white-space: normal;
@@ -334,7 +334,7 @@ body {
 }
 
 .dropdown-item-arrow {
-    color: rgba(255, 255, 255, 0.40);
+    color: rgba(255, 255, 255, 0.45);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -343,7 +343,7 @@ body {
 }
 
 .dropdown-item:hover .dropdown-item-arrow {
-    color: #38bdf8;
+    color: #ffffff;
     transform: translateX(4px);
 }
 
