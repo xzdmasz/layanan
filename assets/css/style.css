@@ -1446,71 +1446,18 @@ body {
     /* ── MOBILE BOTTOM NAVIGATION BAR (Strictly Mobile <= 768px) ── */
     body { padding-bottom: 64px; }
 
-    /* ── STABLE & NEAT HERO ON MOBILE (Fits perfectly above ticker + bottom nav) ── */
+    /* ── STABLE HERO ON MOBILE (Prevents zoom/shift when scrolling down) ── */
     #hero {
-        height: calc(100svh - 100px) !important;
-        height: calc(100vh - 100px) !important;
-        min-height: 420px !important;
-        max-height: 520px !important;
+        height: 85vh !important;
+        height: 85svh !important;
+        min-height: 480px !important;
+        max-height: 620px !important;
     }
 
     .slide {
         background-attachment: scroll !important;
         transform: none !important;
         will-change: opacity !important;
-    }
-
-    .hero-content {
-        padding-left: 20px !important;
-        padding-right: 20px !important;
-        padding-bottom: 50px !important;
-        padding-top: 60px !important;
-    }
-
-    .hero-title {
-        font-size: 1.75rem !important;
-        margin-bottom: 8px !important;
-        line-height: 1.2 !important;
-    }
-
-    .hero-quote {
-        font-size: 12px !important;
-        line-height: 1.5 !important;
-        margin-bottom: 6px !important;
-        max-width: 100% !important;
-    }
-
-    .hero-author {
-        font-size: 9.5px !important;
-    }
-
-    /* Mobile slide controls compact alignment */
-    .slide-number {
-        bottom: 16px !important;
-        left: 20px !important;
-        font-size: 11px !important;
-    }
-
-    .slide-dots {
-        bottom: 20px !important;
-    }
-
-    .slide-nav {
-        bottom: 14px !important;
-        right: 20px !important;
-    }
-
-    .slide-btn {
-        width: 32px !important;
-        height: 32px !important;
-    }
-
-    /* Announcement ticker bar spacing on mobile */
-    .announce-bar {
-        position: relative;
-        z-index: 20;
-        font-size: 11.5px !important;
-        padding: 8px 0 !important;
     }
 
     /* Hide desktop nav LINKS only — profile/auth button stays in top navbar */
