@@ -248,4 +248,49 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
+    // ─────────────────────────────────────────────
+    // 8. BOTTOM SHEET LAYANAN MODAL (MOBILE)
+    // ─────────────────────────────────────────────
+    const btnLayanan    = document.getElementById('btn-bottom-layanan');
+    const sheetLayanan  = document.getElementById('bottom-sheet-layanan');
+    const sheetCloseBtn = document.getElementById('sheet-close-layanan');
+
+    if (btnLayanan && sheetLayanan) {
+        function openSheet() {
+            sheetLayanan.classList.add('open');
+            sheetLayanan.setAttribute('aria-hidden', 'false');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeSheet() {
+            sheetLayanan.classList.remove('open');
+            sheetLayanan.setAttribute('aria-hidden', 'true');
+            document.body.style.overflow = '';
+        }
+
+        btnLayanan.addEventListener('click', function (e) {
+            e.preventDefault();
+            openSheet();
+        });
+
+        if (sheetCloseBtn) {
+            sheetCloseBtn.addEventListener('click', closeSheet);
+        }
+
+        // Close on overlay click
+        sheetLayanan.addEventListener('click', function (e) {
+            if (e.target === sheetLayanan) {
+                closeSheet();
+            }
+        });
+
+        // Close on Escape key
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape' && sheetLayanan.classList.contains('open')) {
+                closeSheet();
+            }
+        });
+    }
+
 });
+

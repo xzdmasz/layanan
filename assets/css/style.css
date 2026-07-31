@@ -1405,6 +1405,150 @@ body {
         filter: drop-shadow(0 2px 6px rgba(255,255,255,0.4));
     }
 
+    button.bottom-nav-item {
+        background: none;
+        border: none;
+        cursor: pointer;
+        font-family: inherit;
+    }
+
+    /* ── BOTTOM SHEET MODAL LAYANAN ── */
+    .bottom-sheet-overlay {
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.65);
+        backdrop-filter: blur(4px);
+        -webkit-backdrop-filter: blur(4px);
+        z-index: 10000;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.25s ease;
+    }
+    .bottom-sheet-overlay.open {
+        opacity: 1;
+        pointer-events: auto;
+    }
+
+    .bottom-sheet-content {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: #ffffff;
+        border-radius: 16px 16px 0 0;
+        padding: 12px 20px 24px;
+        transform: translateY(100%);
+        transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        box-shadow: 0 -10px 40px rgba(0,0,0,0.3);
+    }
+    .bottom-sheet-overlay.open .bottom-sheet-content {
+        transform: translateY(0);
+    }
+
+    .bottom-sheet-handle {
+        width: 36px;
+        height: 4px;
+        background: #e0e0e0;
+        border-radius: 2px;
+        margin: 0 auto 16px;
+    }
+
+    .bottom-sheet-header {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+    .bottom-sheet-header h3 {
+        font-family: 'Playfair Display', serif;
+        font-size: 1.25rem;
+        font-weight: 700;
+        color: #111111;
+        margin: 0 0 4px;
+    }
+    .bottom-sheet-header p {
+        font-size: 12.5px;
+        color: #777777;
+        margin: 0;
+    }
+
+    .bottom-sheet-options {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        margin-bottom: 16px;
+    }
+
+    .sheet-option-card {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        padding: 16px;
+        border: 1px solid #e8e8e8;
+        border-radius: 10px;
+        background: #fafafa;
+        text-decoration: none;
+        transition: background 0.2s, border-color 0.2s;
+    }
+    .sheet-option-card:active {
+        background: #f0f0f0;
+        border-color: #111;
+    }
+
+    .sheet-icon {
+        width: 44px;
+        height: 44px;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+    }
+    .sheet-icon.icon-kesehatan {
+        background: #111111;
+        color: #ffffff;
+    }
+    .sheet-icon.icon-hukum {
+        background: #333333;
+        color: #ffffff;
+    }
+
+    .sheet-option-text {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+    }
+    .sheet-option-text strong {
+        font-size: 13.5px;
+        font-weight: 700;
+        color: #111111;
+    }
+    .sheet-option-text span {
+        font-size: 11.5px;
+        color: #666666;
+    }
+
+    .sheet-arrow {
+        color: #aaa;
+        flex-shrink: 0;
+    }
+
+    .sheet-close-btn {
+        width: 100%;
+        height: 42px;
+        background: #f0f0f0;
+        color: #555;
+        border: none;
+        border-radius: 8px;
+        font-size: 13px;
+        font-weight: 600;
+        font-family: inherit;
+        cursor: pointer;
+        transition: background 0.2s;
+    }
+    .sheet-close-btn:active {
+        background: #e0e0e0;
+    }
+
     /* ── PENGUMUMAN / NEWS — 1 col ── */
     section[aria-labelledby="news-heading"] > .container > div:last-child {
         grid-template-columns: 1fr !important;

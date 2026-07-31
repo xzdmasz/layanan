@@ -123,42 +123,8 @@ require_once __DIR__ . '/db.php';
             <?php endif; ?>
         </div>
 
-        <!-- Hamburger — mobile only -->
-        <button id="hamburger" class="nav-hamburger" aria-label="Buka menu navigasi" aria-expanded="false" aria-controls="mobile-menu">
-            <span class="hamburger-line"></span>
-            <span class="hamburger-line"></span>
-            <span class="hamburger-line"></span>
-        </button>
-
-    </div>
-
-    <!-- Mobile Menu -->
-    <div id="mobile-menu" class="mobile-menu" aria-hidden="true">
-        <a href="index.php" class="mobile-nav-link" style="justify-content:flex-start;">Beranda</a>
-        <button class="mobile-nav-link" id="mobile-layanan-btn" aria-expanded="false" aria-controls="mobile-layanan-sub">
-            Layanan
-            <svg id="mobile-layanan-chevron" style="width:16px; height:16px; transition:transform 0.25s;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                <polyline points="6 9 12 15 18 9"/>
-            </svg>
-        </button>
-        <div id="mobile-layanan-sub" class="mobile-sub-menu" aria-hidden="true">
-            <a href="layanan-pengaduan.php" class="mobile-sub-link">Layanan &amp; Pengaduan Penyakit</a>
-            <a href="layanan-hukum.php"     class="mobile-sub-link">Layanan Hukum</a>
         </div>
-        <!-- Auth mobile -->
-        <?php if (isLoggedIn()): ?>
-            <a href="riwayat.php" class="mobile-nav-link" style="justify-content:flex-start;">
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right:8px;"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-                Riwayat Pengaduan
-            </a>
-            <a href="akun.php" class="mobile-nav-link" style="justify-content:flex-start;">
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right:8px;"><circle cx="12" cy="12" r="3"/><circle cx="12" cy="7" r="4"/></svg>
-                Kelola Akun
-            </a>
-            <a href="logout.php" class="mobile-nav-link" style="color:rgba(255,255,255,0.55); justify-content:flex-start;">Keluar</a>
-        <?php else: ?>
-            <a href="login.php" class="mobile-nav-link" style="justify-content:flex-start;">Masuk</a>
-        <?php endif; ?>
+
     </div>
 </nav>
 </header>
@@ -166,8 +132,10 @@ require_once __DIR__ . '/db.php';
 <!-- ===== MOBILE BOTTOM NAVIGATION BAR ===== -->
 <?php
 $currentPage = basename($_SERVER['PHP_SELF']);
+$isLayananActive = ($currentPage === 'layanan-pengaduan.php' || $currentPage === 'layanan-hukum.php');
 ?>
 <nav class="mobile-bottom-nav" aria-label="Navigasi Bawah">
+    <!-- 1. Beranda -->
     <a href="index.php" class="bottom-nav-item <?= ($currentPage === 'index.php') ? 'active' : '' ?>">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
@@ -176,20 +144,16 @@ $currentPage = basename($_SERVER['PHP_SELF']);
         <span>Beranda</span>
     </a>
 
-    <a href="layanan-pengaduan.php" class="bottom-nav-item <?= ($currentPage === 'layanan-pengaduan.php') ? 'active' : '' ?>">
+    <!-- 2. Layanan (Trigger Bottom Sheet) -->
+    <button type="button" class="bottom-nav-item <?= $isLayananActive ? 'active' : '' ?>" id="btn-bottom-layanan">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
+            <rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/>
+            <rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/>
         </svg>
-        <span>Kesehatan</span>
-    </a>
+        <span>Layanan</span>
+    </button>
 
-    <a href="layanan-hukum.php" class="bottom-nav-item <?= ($currentPage === 'layanan-hukum.php') ? 'active' : '' ?>">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
-        </svg>
-        <span>Hukum</span>
-    </a>
-
+    <!-- 3. Riwayat Laporan -->
     <a href="<?= isLoggedIn() ? 'riwayat.php' : 'login.php?redirect=riwayat.php' ?>" class="bottom-nav-item <?= ($currentPage === 'riwayat.php') ? 'active' : '' ?>">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
@@ -199,23 +163,43 @@ $currentPage = basename($_SERVER['PHP_SELF']);
         </svg>
         <span>Riwayat</span>
     </a>
-
-    <?php if (isLoggedIn()): ?>
-        <a href="akun.php" class="bottom-nav-item <?= ($currentPage === 'akun.php') ? 'active' : '' ?>">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
-                <circle cx="12" cy="7" r="4"/>
-            </svg>
-            <span>Akun</span>
-        </a>
-    <?php else: ?>
-        <a href="login.php" class="bottom-nav-item <?= ($currentPage === 'login.php' || $currentPage === 'register.php') ? 'active' : '' ?>">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/>
-                <polyline points="10 17 15 12 10 7"/>
-                <line x1="15" y1="12" x2="3" y2="12"/>
-            </svg>
-            <span>Masuk</span>
-        </a>
-    <?php endif; ?>
 </nav>
+
+<!-- ===== BOTTOM SHEET MODAL LAYANAN (MOBILE) ===== -->
+<div class="bottom-sheet-overlay" id="bottom-sheet-layanan" aria-hidden="true">
+    <div class="bottom-sheet-content" role="dialog" aria-modal="true" aria-labelledby="sheet-title">
+        <div class="bottom-sheet-handle"></div>
+        <div class="bottom-sheet-header">
+            <h3 id="sheet-title">Pilih Layanan Desa</h3>
+            <p>Silakan pilih jenis pengaduan atau konsultasi</p>
+        </div>
+        <div class="bottom-sheet-options">
+            <a href="layanan-pengaduan.php" class="sheet-option-card">
+                <div class="sheet-icon icon-kesehatan">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
+                    </svg>
+                </div>
+                <div class="sheet-option-text">
+                    <strong>Pengaduan Kesehatan</strong>
+                    <span>Laporan kasus penyakit, medis &amp; lingkungan</span>
+                </div>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="sheet-arrow"><polyline points="9 18 15 12 9 6"/></svg>
+            </a>
+
+            <a href="layanan-hukum.php" class="sheet-option-card">
+                <div class="sheet-icon icon-hukum">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                    </svg>
+                </div>
+                <div class="sheet-option-text">
+                    <strong>Layanan Hukum</strong>
+                    <span>Konsultasi sengketa, tanah &amp; bantuan hukum</span>
+                </div>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="sheet-arrow"><polyline points="9 18 15 12 9 6"/></svg>
+            </a>
+        </div>
+        <button type="button" class="sheet-close-btn" id="sheet-close-layanan">Tutup</button>
+    </div>
+</div>
