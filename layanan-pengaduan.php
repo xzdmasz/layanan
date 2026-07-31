@@ -1,4 +1,63 @@
 <?php
+/* ─────────────────────────────────────────────────────────────
+   layanan-pengaduan.php — Layanan & Pengaduan Penyakit
+   Desa Sungai Bakau Kecil
+   ───────────────────────────────────────────────────────────── */
+
+// Cek login — redirect ke login jika belum masuk
+require_once 'includes/auth.php';
+cekLoginUser('layanan-pengaduan.php');
+require_once 'includes/db.php';
+
+$user    = getUser();
+$errors  = [];
+$success = false;
+$noLaporan = null;
+
+// ── Proses POST ──
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $kategori        = trim($_POST['kategori']        ?? '');
+    $alamat_kejadian = trim($_POST['alamat_kejadian'] ?? '');
+    $detail_gejala   = trim($_POST['detail_gejala']  ?? '');
+
+    // Validasi server-side
+    $kategoris = ['demam_berdarah','penyakit_menular','sanitasi','posyandu','lainnya'];
+    if (empty($kategori) || !in_array($kategori, $kategoris)) {
+        $errors[] = 'Pilih kategori pengaduan yang valid.';
+    }
+    if (empty($alamat_kejadian)) {
+        $errors[] = 'Alamat / lokasi kejadian wajib diisi.';
+    }
+    if (empty($detail_gejala)) {
+        $errors[] = 'Detail gejala / masalah wajib diisi.';
+    }
+
+    if (empty($errors)) {
+        try {
+            $db   = getDB();
+            $stmt = $db->prepare('
+                INSERT INTO pengaduan_kesehatan
+                    (user_id, nama_lengkap, nik, no_hp, kategori, alamat_kejadian, detail_gejala)
+                VALUES (?, ?, ?, ?, ?, ?, ?)
+            ');
+            $stmt->execute([
+                $user['id'],
+                $user['nama_lengkap'],
+                $user['nik'],
+                $user['no_hp'],
+                $kategori,
+                $alamat_kejadian,
+                $detail_gejala,
+            ]);
+            $noLaporan = $db->lastInsertId();
+            $success   = true;
+        } catch (Exception $e) {
+            $errors[] = 'Gagal menyimpan laporan. Silakan coba lagi.';
+            error_log('Pengaduan Kesehatan insert error: ' . $e->getMessage());
+        }
+    }
+}
+
 $pageTitle = 'Layanan & Pengaduan Penyakit';
 require_once 'includes/header.php';
 ?>
@@ -21,7 +80,7 @@ require_once 'includes/header.php';
 <section style="background:#ffffff; padding:72px 0;">
     <div class="container">
         <div class="form-layout">
-            
+
             <!-- Form Pengaduan -->
             <div>
                 <span class="section-label">Formulir Laporan</span>
@@ -30,50 +89,97 @@ require_once 'includes/header.php';
                     Formulir Pengaduan Kesehatan
                 </h2>
 
-                <form action="#" method="POST" style="display:flex; flex-direction:column; gap:20px;">
+                <?php if ($success): ?>
+                <!-- ── Pesan Sukses ── -->
+                <div style="background:#f0fdf4; border:1.5px solid #86efac; border-radius:4px; padding:24px 28px; margin-bottom:28px;">
+                    <div style="display:flex; align-items:center; gap:12px; margin-bottom:12px;">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="9 12 11.5 14.5 15 10"/></svg>
+                        <strong style="font-size:15px; color:#15803d; font-family:'Playfair Display',serif;">Laporan Berhasil Dikirim!</strong>
+                    </div>
+                    <p style="font-size:13.5px; color:#166534; margin:0 0 8px; line-height:1.6;">
+                        Pengaduan Anda telah tercatat dengan <strong>Nomor Laporan #<?= $noLaporan ?></strong>.
+                        Tim kesehatan desa akan menghubungi Anda via WhatsApp di nomor
+                        <strong><?= htmlspecialchars($user['no_hp']) ?></strong> untuk tindak lanjut.
+                    </p>
+                    <p style="font-size:12px; color:#4ade80; margin:0;">
+                        Simpan nomor laporan Anda untuk keperluan pelacakan status.
+                    </p>
+                </div>
+                <?php endif; ?>
+
+                <?php if (!empty($errors)): ?>
+                <!-- ── Pesan Error ── -->
+                <div style="background:#fef2f2; border:1.5px solid #fecaca; border-radius:4px; padding:16px 20px; margin-bottom:24px;">
+                    <strong style="font-size:13px; color:#b91c1c; display:block; margin-bottom:8px;">Perbaiki kesalahan berikut:</strong>
+                    <ul style="margin:0; padding-left:18px; font-size:13px; color:#b91c1c; line-height:1.8;">
+                        <?php foreach ($errors as $e): ?>
+                        <li><?= htmlspecialchars($e) ?></li>
+                        <?php endforeach; ?>
+                    </ul>
+                </div>
+                <?php endif; ?>
+
+                <?php if (!$success): ?>
+                <form action="layanan-pengaduan.php" method="POST" style="display:flex; flex-direction:column; gap:20px;">
+
+                    <!-- Auto-fill dari session (disabled) -->
                     <div class="form-row-2col">
                         <div>
-                            <label class="form-label">Nama Lengkap *</label>
-                            <input type="text" required placeholder="Masukkan nama Anda" class="form-input">
+                            <label class="form-label">Nama Lengkap</label>
+                            <input type="text" value="<?= htmlspecialchars($user['nama_lengkap']) ?>" class="form-input" disabled style="background:#f5f5f5; color:#666; cursor:not-allowed;">
                         </div>
                         <div>
-                            <label class="form-label">NIK (Nomor Induk Kependudukan) *</label>
-                            <input type="text" required placeholder="16 digit NIK" class="form-input">
+                            <label class="form-label">NIK</label>
+                            <input type="text" value="<?= htmlspecialchars($user['nik']) ?>" class="form-input" disabled style="background:#f5f5f5; color:#666; cursor:not-allowed;">
                         </div>
                     </div>
 
                     <div class="form-row-2col">
                         <div>
-                            <label class="form-label">Nomor HP / WhatsApp *</label>
-                            <input type="tel" required placeholder="Contoh: 081234567890" class="form-input">
+                            <label class="form-label">Nomor HP / WhatsApp</label>
+                            <input type="tel" value="<?= htmlspecialchars($user['no_hp']) ?>" class="form-input" disabled style="background:#f5f5f5; color:#666; cursor:not-allowed;">
                         </div>
                         <div>
                             <label class="form-label">Kategori Pengaduan *</label>
-                            <select required class="form-input">
+                            <select name="kategori" required class="form-input">
                                 <option value="">-- Pilih Kategori --</option>
-                                <option value="demam_berdarah">Laporan Kasus Demam Berdarah (DBD)</option>
-                                <option value="penyakit_menular">Penyakit Menular Lainnya</option>
-                                <option value="sanitasi">Masalah Air Bersih &amp; Sanitasi Lingkungan</option>
-                                <option value="posyandu">Layanan Balita / Ibu Hamil</option>
-                                <option value="lainnya">Lainnya</option>
+                                <option value="demam_berdarah" <?= (($_POST['kategori']??'')==='demam_berdarah')?'selected':'' ?>>Laporan Kasus Demam Berdarah (DBD)</option>
+                                <option value="penyakit_menular" <?= (($_POST['kategori']??'')==='penyakit_menular')?'selected':'' ?>>Penyakit Menular Lainnya</option>
+                                <option value="sanitasi" <?= (($_POST['kategori']??'')==='sanitasi')?'selected':'' ?>>Masalah Air Bersih &amp; Sanitasi Lingkungan</option>
+                                <option value="posyandu" <?= (($_POST['kategori']??'')==='posyandu')?'selected':'' ?>>Layanan Balita / Ibu Hamil</option>
+                                <option value="lainnya" <?= (($_POST['kategori']??'')==='lainnya')?'selected':'' ?>>Lainnya</option>
                             </select>
                         </div>
                     </div>
 
                     <div>
                         <label class="form-label">Alamat / Lokasi Kejadian *</label>
-                        <input type="text" required placeholder="Dusun, RT/RW, atau petunjuk lokasi" class="form-input">
+                        <input type="text" name="alamat_kejadian" required
+                               placeholder="Dusun, RT/RW, atau petunjuk lokasi"
+                               value="<?= htmlspecialchars($_POST['alamat_kejadian'] ?? '') ?>"
+                               class="form-input">
                     </div>
 
                     <div>
                         <label class="form-label">Detail Gejala / Masalah Kesehatan *</label>
-                        <textarea rows="5" required placeholder="Jelaskan secara singkat gejala yang dialami, jumlah orang terdampak, atau masalah yang ditemukan..." class="form-input" style="resize:vertical;"></textarea>
+                        <textarea name="detail_gejala" rows="5" required
+                                  placeholder="Jelaskan secara singkat gejala yang dialami, jumlah orang terdampak, atau masalah yang ditemukan..."
+                                  class="form-input" style="resize:vertical;"><?= htmlspecialchars($_POST['detail_gejala'] ?? '') ?></textarea>
                     </div>
 
-                    <button type="submit" class="btn-dark" style="align-self:flex-start; cursor:pointer;">
-                        Kirim Laporan Pengaduan
-                    </button>
+                    <div style="display:flex; align-items:center; gap:12px; flex-wrap:wrap;">
+                        <button type="submit" class="btn-dark" style="cursor:pointer;">
+                            Kirim Laporan Pengaduan
+                        </button>
+                        <span style="font-size:12px; color:#999;">
+                            Data diri diambil dari akun Anda — <a href="logout.php" style="color:#555;">bukan Anda?</a>
+                        </span>
+                    </div>
+
                 </form>
+                <?php else: ?>
+                <a href="layanan-pengaduan.php" class="btn-dark" style="display:inline-block;">Buat Laporan Baru</a>
+                <?php endif; ?>
             </div>
 
             <!-- Sidebar Info -->

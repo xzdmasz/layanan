@@ -1,4 +1,57 @@
 <?php
+/* ─────────────────────────────────────────────────────────────
+   layanan-hukum.php — Layanan Hukum Desa
+   Desa Sungai Bakau Kecil
+   ───────────────────────────────────────────────────────────── */
+
+// Cek login — redirect ke login jika belum masuk
+require_once 'includes/auth.php';
+cekLoginUser('layanan-hukum.php');
+require_once 'includes/db.php';
+
+$user      = getUser();
+$errors    = [];
+$success   = false;
+$noLaporan = null;
+
+// ── Proses POST ──
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $jenis_masalah = trim($_POST['jenis_masalah'] ?? '');
+    $ringkasan     = trim($_POST['ringkasan']     ?? '');
+
+    $jenisList = ['tanah','sengketa','keluarga','perjanjian','lainnya'];
+    if (empty($jenis_masalah) || !in_array($jenis_masalah, $jenisList)) {
+        $errors[] = 'Pilih jenis permasalahan hukum yang valid.';
+    }
+    if (empty($ringkasan)) {
+        $errors[] = 'Ringkasan permasalahan wajib diisi.';
+    }
+
+    if (empty($errors)) {
+        try {
+            $db   = getDB();
+            $stmt = $db->prepare('
+                INSERT INTO pengaduan_hukum
+                    (user_id, nama_pemohon, nik_pemohon, no_telp, jenis_masalah, ringkasan)
+                VALUES (?, ?, ?, ?, ?, ?)
+            ');
+            $stmt->execute([
+                $user['id'],
+                $user['nama_lengkap'],
+                $user['nik'],
+                $user['no_hp'],
+                $jenis_masalah,
+                $ringkasan,
+            ]);
+            $noLaporan = $db->lastInsertId();
+            $success   = true;
+        } catch (Exception $e) {
+            $errors[] = 'Gagal menyimpan permohonan. Silakan coba lagi.';
+            error_log('Pengaduan Hukum insert error: ' . $e->getMessage());
+        }
+    }
+}
+
 $pageTitle = 'Layanan Hukum';
 require_once 'includes/header.php';
 ?>
@@ -20,7 +73,7 @@ require_once 'includes/header.php';
 <!-- Content -->
 <section style="background:#ffffff; padding:72px 0;">
     <div class="container">
-        
+
         <!-- Bidang Layanan -->
         <div style="margin-bottom:56px;">
             <span class="section-label">Bantuan &amp; Konsultasi</span>
@@ -60,45 +113,89 @@ require_once 'includes/header.php';
                     Form Permohonan Konsultasi Hukum
                 </h2>
 
-                <form action="#" method="POST" style="display:flex; flex-direction:column; gap:20px;">
+                <?php if ($success): ?>
+                <!-- ── Pesan Sukses ── -->
+                <div style="background:#f0fdf4; border:1.5px solid #86efac; border-radius:4px; padding:24px 28px; margin-bottom:28px;">
+                    <div style="display:flex; align-items:center; gap:12px; margin-bottom:12px;">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="9 12 11.5 14.5 15 10"/></svg>
+                        <strong style="font-size:15px; color:#15803d; font-family:'Playfair Display',serif;">Permohonan Berhasil Diajukan!</strong>
+                    </div>
+                    <p style="font-size:13.5px; color:#166534; margin:0 0 8px; line-height:1.6;">
+                        Permohonan Anda telah tercatat dengan <strong>Nomor Laporan #<?= $noLaporan ?></strong>.
+                        Tim hukum desa akan menghubungi Anda via WhatsApp di nomor
+                        <strong><?= htmlspecialchars($user['no_hp']) ?></strong> untuk konfirmasi jadwal konsultasi.
+                    </p>
+                    <p style="font-size:12px; color:#4ade80; margin:0;">
+                        Simpan nomor laporan Anda untuk keperluan pelacakan status.
+                    </p>
+                </div>
+                <?php endif; ?>
+
+                <?php if (!empty($errors)): ?>
+                <!-- ── Pesan Error ── -->
+                <div style="background:#fef2f2; border:1.5px solid #fecaca; border-radius:4px; padding:16px 20px; margin-bottom:24px;">
+                    <strong style="font-size:13px; color:#b91c1c; display:block; margin-bottom:8px;">Perbaiki kesalahan berikut:</strong>
+                    <ul style="margin:0; padding-left:18px; font-size:13px; color:#b91c1c; line-height:1.8;">
+                        <?php foreach ($errors as $e): ?>
+                        <li><?= htmlspecialchars($e) ?></li>
+                        <?php endforeach; ?>
+                    </ul>
+                </div>
+                <?php endif; ?>
+
+                <?php if (!$success): ?>
+                <form action="layanan-hukum.php" method="POST" style="display:flex; flex-direction:column; gap:20px;">
+
+                    <!-- Auto-fill dari session (disabled) -->
                     <div class="form-row-2col">
                         <div>
-                            <label class="form-label">Nama Pemohon *</label>
-                            <input type="text" required placeholder="Nama sesuai KTP" class="form-input">
+                            <label class="form-label">Nama Pemohon</label>
+                            <input type="text" value="<?= htmlspecialchars($user['nama_lengkap']) ?>" class="form-input" disabled style="background:#f5f5f5; color:#666; cursor:not-allowed;">
                         </div>
                         <div>
-                            <label class="form-label">NIK Pemohon *</label>
-                            <input type="text" required placeholder="16 digit NIK" class="form-input">
+                            <label class="form-label">NIK Pemohon</label>
+                            <input type="text" value="<?= htmlspecialchars($user['nik']) ?>" class="form-input" disabled style="background:#f5f5f5; color:#666; cursor:not-allowed;">
                         </div>
                     </div>
 
                     <div class="form-row-2col">
                         <div>
-                            <label class="form-label">Nomor Telepon / WA *</label>
-                            <input type="tel" required placeholder="Nomor kontak aktif" class="form-input">
+                            <label class="form-label">Nomor Telepon / WA</label>
+                            <input type="tel" value="<?= htmlspecialchars($user['no_hp']) ?>" class="form-input" disabled style="background:#f5f5f5; color:#666; cursor:not-allowed;">
                         </div>
                         <div>
                             <label class="form-label">Jenis Permasalahan Hukum *</label>
-                            <select required class="form-input">
+                            <select name="jenis_masalah" required class="form-input">
                                 <option value="">-- Pilih Jenis --</option>
-                                <option value="tanah">Pertanahan &amp; Batas Batas Lahan</option>
-                                <option value="sengketa">Sengketa Antar Warga</option>
-                                <option value="keluarga">Hukum Keluarga &amp; Waris</option>
-                                <option value="perjanjian">Perjanjian &amp; Usaha Desa</option>
-                                <option value="lainnya">Lainnya</option>
+                                <option value="tanah"     <?= (($_POST['jenis_masalah']??'')==='tanah')?'selected':'' ?>>Pertanahan &amp; Batas Lahan</option>
+                                <option value="sengketa"  <?= (($_POST['jenis_masalah']??'')==='sengketa')?'selected':'' ?>>Sengketa Antar Warga</option>
+                                <option value="keluarga"  <?= (($_POST['jenis_masalah']??'')==='keluarga')?'selected':'' ?>>Hukum Keluarga &amp; Waris</option>
+                                <option value="perjanjian"<?= (($_POST['jenis_masalah']??'')==='perjanjian')?'selected':'' ?>>Perjanjian &amp; Usaha Desa</option>
+                                <option value="lainnya"   <?= (($_POST['jenis_masalah']??'')==='lainnya')?'selected':'' ?>>Lainnya</option>
                             </select>
                         </div>
                     </div>
 
                     <div>
                         <label class="form-label">Ringkasan Permasalahan *</label>
-                        <textarea rows="5" required placeholder="Uraikan kronologi singkat masalah yang ingin dikonsultasikan secara rahasia dan aman..." class="form-input" style="resize:vertical;"></textarea>
+                        <textarea name="ringkasan" rows="5" required
+                                  placeholder="Uraikan kronologi singkat masalah yang ingin dikonsultasikan secara rahasia dan aman..."
+                                  class="form-input" style="resize:vertical;"><?= htmlspecialchars($_POST['ringkasan'] ?? '') ?></textarea>
                     </div>
 
-                    <button type="submit" class="btn-dark" style="align-self:flex-start; cursor:pointer;">
-                        Ajukan Jadwal Konsultasi
-                    </button>
+                    <div style="display:flex; align-items:center; gap:12px; flex-wrap:wrap;">
+                        <button type="submit" class="btn-dark" style="cursor:pointer;">
+                            Ajukan Jadwal Konsultasi
+                        </button>
+                        <span style="font-size:12px; color:#999;">
+                            Data diri diambil dari akun Anda — <a href="logout.php" style="color:#555;">bukan Anda?</a>
+                        </span>
+                    </div>
+
                 </form>
+                <?php else: ?>
+                <a href="layanan-hukum.php" class="btn-dark" style="display:inline-block;">Buat Permohonan Baru</a>
+                <?php endif; ?>
             </div>
 
             <!-- Sidebar Info -->

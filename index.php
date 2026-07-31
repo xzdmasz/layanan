@@ -1,4 +1,25 @@
-<?php $pageTitle = 'Beranda'; require_once 'includes/header.php'; ?>
+<?php
+$pageTitle = 'Beranda';
+require_once 'includes/db.php';
+
+// Ambil statistik dari database, fallback ke default jika gagal
+$statsDefault = [
+    ['kunci'=>'penduduk',     'label'=>'Penduduk',          'nilai'=>'3.847', 'target_angka'=>3847],
+    ['kunci'=>'kk',           'label'=>'Kepala Keluarga',   'nilai'=>'1.124', 'target_angka'=>1124],
+    ['kunci'=>'layanan_bulan','label'=>'Layanan Bulan Ini', 'nilai'=>'247',   'target_angka'=>247],
+    ['kunci'=>'kepuasan',     'label'=>'Kepuasan Warga',    'nilai'=>'98%',   'target_angka'=>98],
+];
+try {
+    $db       = getDB();
+    $stmt     = $db->query('SELECT * FROM statistik_desa ORDER BY id ASC');
+    $statsDB  = $stmt->fetchAll();
+    $stats    = array_map(fn($r) => ['label'=>$r['label'],'num'=>$r['nilai'],'target'=>(int)$r['target_angka']], $statsDB);
+} catch (Exception $e) {
+    $stats = array_map(fn($r) => ['label'=>$r['label'],'num'=>$r['nilai'],'target'=>$r['target_angka']], $statsDefault);
+}
+
+require_once 'includes/header.php';
+?>
 
 <!-- ======================================================
      HERO SLIDER — Black & White Theme (3 Slides)
@@ -90,17 +111,10 @@
 <section class="stats-section py-12 reveal" aria-label="Statistik Desa">
     <div class="container">
         <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:0; border:1px solid #e5e5e5;">
-            <?php
-            $stats = [
-                ['num' => '3.847', 'label' => 'Penduduk',         'target' => 3847],
-                ['num' => '1.124', 'label' => 'Kepala Keluarga',  'target' => 1124],
-                ['num' => '247',   'label' => 'Layanan Bulan Ini','target' => 247],
-                ['num' => '98%',   'label' => 'Kepuasan Warga',   'target' => 98],
-            ];
-            foreach ($stats as $i => $s): ?>
+            <?php foreach ($stats as $i => $s): ?>
             <div class="stat-item" style="padding:28px 20px; <?= $i < 3 ? 'border-right:1px solid #e5e5e5;' : '' ?>">
-                <span class="stat-num" data-target="<?= $s['target'] ?>"><?= $s['num'] ?></span>
-                <span class="stat-label"><?= $s['label'] ?></span>
+                <span class="stat-num" data-target="<?= $s['target'] ?>"><?= htmlspecialchars($s['num']) ?></span>
+                <span class="stat-label"><?= htmlspecialchars($s['label']) ?></span>
             </div>
             <?php endforeach; ?>
         </div>

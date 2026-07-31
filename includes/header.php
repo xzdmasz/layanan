@@ -1,4 +1,9 @@
-<?php /* Header — Desa Sungai Bakau Kecil */ ?>
+<?php
+/* Header — Desa Sungai Bakau Kecil */
+if (session_status() === PHP_SESSION_NONE) session_start();
+require_once __DIR__ . '/auth.php';
+require_once __DIR__ . '/db.php';
+?>
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -71,6 +76,22 @@
 
         </div>
 
+        <!-- Auth Button — desktop -->
+        <div class="nav-auth" id="nav-auth">
+            <?php if (isLoggedIn()): ?>
+                <span class="nav-user-name">
+                    <?= htmlspecialchars(getUser()['nama_lengkap']) ?>
+                </span>
+                <a href="logout.php" class="nav-btn-logout" id="btn-logout-nav">
+                    Keluar
+                </a>
+            <?php else: ?>
+                <a href="login.php" class="nav-btn-login" id="btn-login-nav">
+                    Masuk
+                </a>
+            <?php endif; ?>
+        </div>
+
         <!-- Hamburger — mobile only -->
         <button id="hamburger" class="nav-hamburger" aria-label="Buka menu navigasi" aria-expanded="false" aria-controls="mobile-menu">
             <span class="hamburger-line"></span>
@@ -93,6 +114,12 @@
             <a href="layanan-pengaduan.php" class="mobile-sub-link">Layanan &amp; Pengaduan Penyakit</a>
             <a href="layanan-hukum.php"     class="mobile-sub-link">Layanan Hukum</a>
         </div>
+        <!-- Auth mobile -->
+        <?php if (isLoggedIn()): ?>
+            <a href="logout.php" class="mobile-nav-link" style="color:rgba(255,255,255,0.65); justify-content:flex-start;">Keluar (<?= htmlspecialchars(explode(' ', getUser()['nama_lengkap'])[0]) ?>)</a>
+        <?php else: ?>
+            <a href="login.php" class="mobile-nav-link" style="justify-content:flex-start;">Masuk</a>
+        <?php endif; ?>
     </div>
 </nav>
 </header>
