@@ -125,9 +125,9 @@ require_once 'includes/header.php';
             </p>
         </div>
 
-        <div class="stats-grid-wrap" style="display:grid; grid-template-columns:repeat(3,1fr); gap:0; border:1px solid #e5e5e5; background:#ffffff;">
-            <?php foreach ($stats as $i => $s): ?>
-            <div class="stat-item" style="padding:28px 20px; <?= $i < count($stats) - 1 ? 'border-right:1px solid #e5e5e5;' : '' ?>">
+        <div class="stats-grid-wrap">
+            <?php foreach ($stats as $s): ?>
+            <div class="stat-item">
                 <span class="stat-num" data-target="<?= $s['target'] ?>"><?= htmlspecialchars($s['num']) ?></span>
                 <span class="stat-label"><?= htmlspecialchars($s['label']) ?></span>
             </div>
