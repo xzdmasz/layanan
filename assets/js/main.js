@@ -216,4 +216,36 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
+    // ─────────────────────────────────────────────
+    // 7. PROFILE DROPDOWN TOGGLE
+    // ─────────────────────────────────────────────
+    const profileBtn      = document.getElementById('profile-icon-btn');
+    const profileDropdown = document.getElementById('profile-dropdown');
+
+    if (profileBtn && profileDropdown) {
+        profileBtn.addEventListener('click', function (e) {
+            e.stopPropagation();
+            const isOpen = profileDropdown.classList.contains('open');
+            profileDropdown.classList.toggle('open', !isOpen);
+            profileBtn.setAttribute('aria-expanded', String(!isOpen));
+        });
+
+        // Close when clicking outside
+        document.addEventListener('click', function (e) {
+            if (!profileBtn.contains(e.target) && !profileDropdown.contains(e.target)) {
+                profileDropdown.classList.remove('open');
+                profileBtn.setAttribute('aria-expanded', 'false');
+            }
+        });
+
+        // Close on Escape key
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape') {
+                profileDropdown.classList.remove('open');
+                profileBtn.setAttribute('aria-expanded', 'false');
+                profileBtn.focus();
+            }
+        });
+    }
+
 });

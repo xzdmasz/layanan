@@ -4,7 +4,6 @@
    Desa Sungai Bakau Kecil
    ───────────────────────────────────────────────────────────── */
 
-// Cek login — redirect ke login jika belum masuk
 require_once 'includes/auth.php';
 cekLoginUser('layanan-hukum.php');
 require_once 'includes/db.php';
@@ -14,7 +13,6 @@ $errors    = [];
 $success   = false;
 $noLaporan = null;
 
-// ── Proses POST ──
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $jenis_masalah = trim($_POST['jenis_masalah'] ?? '');
     $ringkasan     = trim($_POST['ringkasan']     ?? '');
@@ -38,7 +36,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $stmt->execute([
                 $user['id'],
                 $user['nama_lengkap'],
-                $user['nik'],
+                '-', // Fallback value for NIK
                 $user['no_hp'],
                 $jenis_masalah,
                 $ringkasan,
@@ -114,7 +112,6 @@ require_once 'includes/header.php';
                 </h2>
 
                 <?php if ($success): ?>
-                <!-- ── Pesan Sukses ── -->
                 <div style="background:#f0fdf4; border:1.5px solid #86efac; border-radius:4px; padding:24px 28px; margin-bottom:28px;">
                     <div style="display:flex; align-items:center; gap:12px; margin-bottom:12px;">
                         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="9 12 11.5 14.5 15 10"/></svg>
@@ -125,14 +122,14 @@ require_once 'includes/header.php';
                         Tim hukum desa akan menghubungi Anda via WhatsApp di nomor
                         <strong><?= htmlspecialchars($user['no_hp']) ?></strong> untuk konfirmasi jadwal konsultasi.
                     </p>
-                    <p style="font-size:12px; color:#4ade80; margin:0;">
-                        Simpan nomor laporan Anda untuk keperluan pelacakan status.
-                    </p>
+                    <div style="display:flex; gap:12px; margin-top:16px;">
+                        <a href="riwayat.php" class="btn-dark" style="font-size:12.5px; padding:8px 16px;">Lihat Riwayat Pengaduan</a>
+                        <a href="layanan-hukum.php" style="font-size:12.5px; padding:8px 16px; border:1px solid #ddd; color:#333; text-decoration:none; border-radius:3px;">Buat Permohonan Baru</a>
+                    </div>
                 </div>
                 <?php endif; ?>
 
                 <?php if (!empty($errors)): ?>
-                <!-- ── Pesan Error ── -->
                 <div style="background:#fef2f2; border:1.5px solid #fecaca; border-radius:4px; padding:16px 20px; margin-bottom:24px;">
                     <strong style="font-size:13px; color:#b91c1c; display:block; margin-bottom:8px;">Perbaiki kesalahan berikut:</strong>
                     <ul style="margin:0; padding-left:18px; font-size:13px; color:#b91c1c; line-height:1.8;">
@@ -146,34 +143,27 @@ require_once 'includes/header.php';
                 <?php if (!$success): ?>
                 <form action="layanan-hukum.php" method="POST" style="display:flex; flex-direction:column; gap:20px;">
 
-                    <!-- Auto-fill dari session (disabled) -->
                     <div class="form-row-2col">
                         <div>
                             <label class="form-label">Nama Pemohon</label>
                             <input type="text" value="<?= htmlspecialchars($user['nama_lengkap']) ?>" class="form-input" disabled style="background:#f5f5f5; color:#666; cursor:not-allowed;">
                         </div>
                         <div>
-                            <label class="form-label">NIK Pemohon</label>
-                            <input type="text" value="<?= htmlspecialchars($user['nik']) ?>" class="form-input" disabled style="background:#f5f5f5; color:#666; cursor:not-allowed;">
-                        </div>
-                    </div>
-
-                    <div class="form-row-2col">
-                        <div>
                             <label class="form-label">Nomor Telepon / WA</label>
                             <input type="tel" value="<?= htmlspecialchars($user['no_hp']) ?>" class="form-input" disabled style="background:#f5f5f5; color:#666; cursor:not-allowed;">
                         </div>
-                        <div>
-                            <label class="form-label">Jenis Permasalahan Hukum *</label>
-                            <select name="jenis_masalah" required class="form-input">
-                                <option value="">-- Pilih Jenis --</option>
-                                <option value="tanah"     <?= (($_POST['jenis_masalah']??'')==='tanah')?'selected':'' ?>>Pertanahan &amp; Batas Lahan</option>
-                                <option value="sengketa"  <?= (($_POST['jenis_masalah']??'')==='sengketa')?'selected':'' ?>>Sengketa Antar Warga</option>
-                                <option value="keluarga"  <?= (($_POST['jenis_masalah']??'')==='keluarga')?'selected':'' ?>>Hukum Keluarga &amp; Waris</option>
-                                <option value="perjanjian"<?= (($_POST['jenis_masalah']??'')==='perjanjian')?'selected':'' ?>>Perjanjian &amp; Usaha Desa</option>
-                                <option value="lainnya"   <?= (($_POST['jenis_masalah']??'')==='lainnya')?'selected':'' ?>>Lainnya</option>
-                            </select>
-                        </div>
+                    </div>
+
+                    <div>
+                        <label class="form-label">Jenis Permasalahan Hukum *</label>
+                        <select name="jenis_masalah" required class="form-input">
+                            <option value="">-- Pilih Jenis --</option>
+                            <option value="tanah"     <?= (($_POST['jenis_masalah']??'')==='tanah')?'selected':'' ?>>Pertanahan &amp; Batas Lahan</option>
+                            <option value="sengketa"  <?= (($_POST['jenis_masalah']??'')==='sengketa')?'selected':'' ?>>Sengketa Antar Warga</option>
+                            <option value="keluarga"  <?= (($_POST['jenis_masalah']??'')==='keluarga')?'selected':'' ?>>Hukum Keluarga &amp; Waris</option>
+                            <option value="perjanjian"<?= (($_POST['jenis_masalah']??'')==='perjanjian')?'selected':'' ?>>Perjanjian &amp; Usaha Desa</option>
+                            <option value="lainnya"   <?= (($_POST['jenis_masalah']??'')==='lainnya')?'selected':'' ?>>Lainnya</option>
+                        </select>
                     </div>
 
                     <div>
@@ -187,20 +177,14 @@ require_once 'includes/header.php';
                         <button type="submit" class="btn-dark" style="cursor:pointer;">
                             Ajukan Jadwal Konsultasi
                         </button>
-                        <span style="font-size:12px; color:#999;">
-                            Data diri diambil dari akun Anda — <a href="logout.php" style="color:#555;">bukan Anda?</a>
-                        </span>
                     </div>
 
                 </form>
-                <?php else: ?>
-                <a href="layanan-hukum.php" class="btn-dark" style="display:inline-block;">Buat Permohonan Baru</a>
                 <?php endif; ?>
             </div>
 
             <!-- Sidebar Info -->
             <div class="form-sidebar">
-                <!-- Accordion Box 1: Pos Bantuan Hukum -->
                 <div class="accordion-box">
                     <button class="accordion-header" type="button" aria-expanded="false">
                         <span>Pos Bantuan Hukum Desa</span>
@@ -222,7 +206,6 @@ require_once 'includes/header.php';
                     </div>
                 </div>
 
-                <!-- Accordion Box 2: Kerahasiaan -->
                 <div class="accordion-box">
                     <button class="accordion-header" type="button" aria-expanded="false">
                         <span>Prinsip Kerahasiaan</span>

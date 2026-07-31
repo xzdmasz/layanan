@@ -53,9 +53,7 @@ function setUserSession(array $userData): void {
     $_SESSION['user'] = [
         'id'          => $userData['id'],
         'nama_lengkap'=> $userData['nama_lengkap'],
-        'nik'         => $userData['nik'],
         'no_hp'       => $userData['no_hp'],
-        'alamat'      => $userData['alamat'],
     ];
 }
 
