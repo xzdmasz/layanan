@@ -249,48 +249,45 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     // ─────────────────────────────────────────────
-    // 8. BOTTOM SHEET LAYANAN MODAL (MOBILE)
+    // 8. FLOATING SPEED DIAL (LAYANAN MOBILE)
     // ─────────────────────────────────────────────
-    const btnLayanan    = document.getElementById('btn-bottom-layanan');
-    const sheetLayanan  = document.getElementById('bottom-sheet-layanan');
-    const sheetCloseBtn = document.getElementById('sheet-close-layanan');
+    const btnLayanan   = document.getElementById('btn-bottom-layanan');
+    const speedDial    = document.getElementById('fab-speed-dial');
+    const dialBackdrop = document.getElementById('speed-dial-backdrop');
+    const fabCircle    = btnLayanan ? btnLayanan.querySelector('.fab-circle') : null;
 
-    if (btnLayanan && sheetLayanan) {
-        function openSheet() {
-            sheetLayanan.classList.add('open');
-            sheetLayanan.setAttribute('aria-hidden', 'false');
-            document.body.style.overflow = 'hidden';
+    if (btnLayanan && speedDial) {
+        function openDial() {
+            speedDial.classList.add('open');
+            speedDial.setAttribute('aria-hidden', 'false');
+            if (dialBackdrop) dialBackdrop.classList.add('open');
+            if (fabCircle) fabCircle.classList.add('is-open');
         }
 
-        function closeSheet() {
-            sheetLayanan.classList.remove('open');
-            sheetLayanan.setAttribute('aria-hidden', 'true');
-            document.body.style.overflow = '';
+        function closeDial() {
+            speedDial.classList.remove('open');
+            speedDial.setAttribute('aria-hidden', 'true');
+            if (dialBackdrop) dialBackdrop.classList.remove('open');
+            if (fabCircle) fabCircle.classList.remove('is-open');
         }
 
         btnLayanan.addEventListener('click', function (e) {
-            e.preventDefault();
-            openSheet();
+            e.stopPropagation();
+            speedDial.classList.contains('open') ? closeDial() : openDial();
         });
 
-        if (sheetCloseBtn) {
-            sheetCloseBtn.addEventListener('click', closeSheet);
+        // Close on backdrop click
+        if (dialBackdrop) {
+            dialBackdrop.addEventListener('click', closeDial);
         }
-
-        // Close on overlay click
-        sheetLayanan.addEventListener('click', function (e) {
-            if (e.target === sheetLayanan) {
-                closeSheet();
-            }
-        });
 
         // Close on Escape key
         document.addEventListener('keydown', function (e) {
-            if (e.key === 'Escape' && sheetLayanan.classList.contains('open')) {
-                closeSheet();
+            if (e.key === 'Escape' && speedDial.classList.contains('open')) {
+                closeDial();
+                btnLayanan.focus();
             }
         });
     }
 
 });
-

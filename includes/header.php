@@ -123,11 +123,10 @@ require_once __DIR__ . '/db.php';
             <?php endif; ?>
         </div>
 
-        </div>
-
     </div>
 </nav>
 </header>
+
 
 <!-- ===== MOBILE BOTTOM NAVIGATION BAR ===== -->
 <?php
@@ -144,13 +143,39 @@ $isLayananActive = ($currentPage === 'layanan-pengaduan.php' || $currentPage ===
         <span>Beranda</span>
     </a>
 
-    <!-- 2. Layanan (Floating Center Circle) -->
-    <div class="bottom-nav-fab-wrap">
+    <!-- 2. Layanan (Floating Center Circle with Speed Dial) -->
+    <div class="bottom-nav-fab-wrap" id="fab-layanan-wrap">
+        <!-- Floating Speed Dial Bubbles -->
+        <div class="fab-speed-dial" id="fab-speed-dial" aria-hidden="true">
+            <!-- Lingkaran 1: Kesehatan -->
+            <a href="layanan-pengaduan.php" class="speed-dial-bubble bubble-kesehatan">
+                <div class="bubble-circle">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
+                    </svg>
+                </div>
+                <span class="bubble-label">Kesehatan</span>
+            </a>
+
+            <!-- Lingkaran 2: Hukum -->
+            <a href="layanan-hukum.php" class="speed-dial-bubble bubble-hukum">
+                <div class="bubble-circle">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                    </svg>
+                </div>
+                <span class="bubble-label">Hukum</span>
+            </a>
+        </div>
+
         <button type="button" class="bottom-nav-fab <?= $isLayananActive ? 'active' : '' ?>" id="btn-bottom-layanan" aria-label="Menu Layanan">
             <div class="fab-circle">
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon-grid">
                     <rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/>
                     <rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/>
+                </svg>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="icon-close">
+                    <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
                 </svg>
             </div>
             <span>Layanan</span>
@@ -169,41 +194,5 @@ $isLayananActive = ($currentPage === 'layanan-pengaduan.php' || $currentPage ===
     </a>
 </nav>
 
-<!-- ===== BOTTOM SHEET MODAL LAYANAN (MOBILE) ===== -->
-<div class="bottom-sheet-overlay" id="bottom-sheet-layanan" aria-hidden="true">
-    <div class="bottom-sheet-content" role="dialog" aria-modal="true" aria-labelledby="sheet-title">
-        <div class="bottom-sheet-handle"></div>
-        <div class="bottom-sheet-header">
-            <h3 id="sheet-title">Pilih Layanan Desa</h3>
-            <p>Silakan pilih jenis pengaduan atau konsultasi</p>
-        </div>
-        <div class="bottom-sheet-options">
-            <a href="layanan-pengaduan.php" class="sheet-option-card">
-                <div class="sheet-icon icon-kesehatan">
-                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
-                    </svg>
-                </div>
-                <div class="sheet-option-text">
-                    <strong>Pengaduan Kesehatan</strong>
-                    <span>Laporan kasus penyakit, medis &amp; lingkungan</span>
-                </div>
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="sheet-arrow"><polyline points="9 18 15 12 9 6"/></svg>
-            </a>
-
-            <a href="layanan-hukum.php" class="sheet-option-card">
-                <div class="sheet-icon icon-hukum">
-                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
-                    </svg>
-                </div>
-                <div class="sheet-option-text">
-                    <strong>Layanan Hukum</strong>
-                    <span>Konsultasi sengketa, tanah &amp; bantuan hukum</span>
-                </div>
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="sheet-arrow"><polyline points="9 18 15 12 9 6"/></svg>
-            </a>
-        </div>
-        <button type="button" class="sheet-close-btn" id="sheet-close-layanan">Tutup</button>
-    </div>
-</div>
+<!-- Backdrop Overlay untuk Speed Dial -->
+<div class="speed-dial-backdrop" id="speed-dial-backdrop" aria-hidden="true"></div>

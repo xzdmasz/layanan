@@ -1280,17 +1280,18 @@ body {
 
 
 
-/* ── MOBILE BOTTOM NAV — DEFAULT HIDDEN ON DESKTOP ── */
-.mobile-bottom-nav {
+/* ── MOBILE BOTTOM NAV & SPEED DIAL — DEFAULT HIDDEN ON DESKTOP ── */
+.mobile-bottom-nav,
+.fab-speed-dial,
+.speed-dial-backdrop {
     display: none !important;
 }
 
 /* ══════════════════════════════════════════════
-   TABLET  ≤ 1024px  — hamburger appears
+   TABLET  ≤ 1024px  — desktop nav adjusts
 ══════════════════════════════════════════════ */
 @media (max-width: 1024px) {
-    .nav-desktop  { display: none !important; }
-    .nav-hamburger { display: flex !important; }
+    .nav-hamburger { display: none !important; }
 }
 
 /* ══════════════════════════════════════════════
@@ -1348,6 +1349,10 @@ body {
 
     /* ── MOBILE BOTTOM NAVIGATION BAR (Strictly Mobile <= 768px) ── */
     body { padding-bottom: 64px; }
+
+    /* Hide desktop navbar links & auth on mobile — bottom nav replaces them */
+    .nav-desktop,
+    .nav-auth { display: none !important; }
 
     .mobile-bottom-nav {
         display: flex !important;
@@ -1466,141 +1471,105 @@ body {
         box-shadow: 0 6px 20px rgba(46, 125, 50, 0.5), 0 0 0 4px rgba(15,15,15,0.96);
     }
 
-    /* ── BOTTOM SHEET MODAL LAYANAN ── */
-    .bottom-sheet-overlay {
+    /* ── FLOATING SPEED DIAL BUBBLES (LAYANAN MOBILE) ── */
+    .fab-speed-dial {
+        display: flex !important;
+        position: absolute;
+        bottom: 72px;
+        left: 50%;
+        transform: translateX(-50%);
+        gap: 20px;
+        pointer-events: none;
+        z-index: 10001;
+    }
+
+    .speed-dial-bubble {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 5px;
+        text-decoration: none;
+        opacity: 0;
+        transform: translateY(24px) scale(0.5);
+        transition: opacity 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275), transform 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        pointer-events: none;
+    }
+
+    .fab-speed-dial.open .speed-dial-bubble {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+        pointer-events: auto;
+    }
+    .fab-speed-dial.open .bubble-kesehatan {
+        transition-delay: 0.04s;
+    }
+    .fab-speed-dial.open .bubble-hukum {
+        transition-delay: 0.08s;
+    }
+
+    .bubble-circle {
+        width: 52px;
+        height: 52px;
+        border-radius: 50%;
+        background: #111111;
+        border: 2px solid rgba(255, 255, 255, 0.30);
+        color: #ffffff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255,255,255,0.1);
+        transition: transform 0.15s, background 0.2s;
+    }
+    .speed-dial-bubble:active .bubble-circle {
+        transform: scale(0.90);
+    }
+
+    .bubble-kesehatan .bubble-circle {
+        background: #111111;
+    }
+    .bubble-hukum .bubble-circle {
+        background: #222222;
+    }
+
+    .bubble-label {
+        font-size: 11px;
+        font-weight: 600;
+        color: #ffffff;
+        background: rgba(15, 15, 15, 0.90);
+        padding: 3px 10px;
+        border-radius: 12px;
+        letter-spacing: 0.02em;
+        white-space: nowrap;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+        border: 1px solid rgba(255,255,255,0.15);
+    }
+
+    /* Icon toggle inside FAB */
+    .fab-circle .icon-close { display: none; }
+    .fab-circle.is-open .icon-grid { display: none; }
+    .fab-circle.is-open .icon-close { display: block; }
+    .fab-circle.is-open {
+        background: #333333 !important;
+        border-color: rgba(255,255,255,0.5) !important;
+        transform: rotate(90deg);
+    }
+
+    /* Backdrop overlay */
+    .speed-dial-backdrop {
+        display: block !important;
         position: fixed;
         inset: 0;
-        background: rgba(0, 0, 0, 0.65);
-        backdrop-filter: blur(4px);
-        -webkit-backdrop-filter: blur(4px);
-        z-index: 10000;
+        background: rgba(0, 0, 0, 0.55);
+        backdrop-filter: blur(3px);
+        -webkit-backdrop-filter: blur(3px);
+        z-index: 9998;
         opacity: 0;
         pointer-events: none;
         transition: opacity 0.25s ease;
     }
-    .bottom-sheet-overlay.open {
+    .speed-dial-backdrop.open {
         opacity: 1;
         pointer-events: auto;
-    }
-
-    .bottom-sheet-content {
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        background: #ffffff;
-        border-radius: 16px 16px 0 0;
-        padding: 12px 20px 24px;
-        transform: translateY(100%);
-        transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-        box-shadow: 0 -10px 40px rgba(0,0,0,0.3);
-    }
-    .bottom-sheet-overlay.open .bottom-sheet-content {
-        transform: translateY(0);
-    }
-
-    .bottom-sheet-handle {
-        width: 36px;
-        height: 4px;
-        background: #e0e0e0;
-        border-radius: 2px;
-        margin: 0 auto 16px;
-    }
-
-    .bottom-sheet-header {
-        text-align: center;
-        margin-bottom: 20px;
-    }
-    .bottom-sheet-header h3 {
-        font-family: 'Playfair Display', serif;
-        font-size: 1.25rem;
-        font-weight: 700;
-        color: #111111;
-        margin: 0 0 4px;
-    }
-    .bottom-sheet-header p {
-        font-size: 12.5px;
-        color: #777777;
-        margin: 0;
-    }
-
-    .bottom-sheet-options {
-        display: flex;
-        flex-direction: column;
-        gap: 12px;
-        margin-bottom: 16px;
-    }
-
-    .sheet-option-card {
-        display: flex;
-        align-items: center;
-        gap: 14px;
-        padding: 16px;
-        border: 1px solid #e8e8e8;
-        border-radius: 10px;
-        background: #fafafa;
-        text-decoration: none;
-        transition: background 0.2s, border-color 0.2s;
-    }
-    .sheet-option-card:active {
-        background: #f0f0f0;
-        border-color: #111;
-    }
-
-    .sheet-icon {
-        width: 44px;
-        height: 44px;
-        border-radius: 8px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        flex-shrink: 0;
-    }
-    .sheet-icon.icon-kesehatan {
-        background: #111111;
-        color: #ffffff;
-    }
-    .sheet-icon.icon-hukum {
-        background: #333333;
-        color: #ffffff;
-    }
-
-    .sheet-option-text {
-        flex: 1;
-        display: flex;
-        flex-direction: column;
-        gap: 2px;
-    }
-    .sheet-option-text strong {
-        font-size: 13.5px;
-        font-weight: 700;
-        color: #111111;
-    }
-    .sheet-option-text span {
-        font-size: 11.5px;
-        color: #666666;
-    }
-
-    .sheet-arrow {
-        color: #aaa;
-        flex-shrink: 0;
-    }
-
-    .sheet-close-btn {
-        width: 100%;
-        height: 42px;
-        background: #f0f0f0;
-        color: #555;
-        border: none;
-        border-radius: 8px;
-        font-size: 13px;
-        font-weight: 600;
-        font-family: inherit;
-        cursor: pointer;
-        transition: background 0.2s;
-    }
-    .sheet-close-btn:active {
-        background: #e0e0e0;
     }
 
     /* ── PENGUMUMAN / NEWS — 1 col ── */
