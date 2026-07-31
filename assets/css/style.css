@@ -29,17 +29,17 @@ body {
         transparent 100%
     );
     padding-bottom: 12px;
-    transition: background 0.35s ease;
+    transition: background 0.4s ease, box-shadow 0.4s ease, padding 0.4s ease;
 }
 
+/* Scrolled: solid white/dark bar that shrinks */
 #navbar.scrolled {
-    background: linear-gradient(
-        to bottom,
-        rgba(0, 0, 0, 0.90) 0%,
-        rgba(0, 0, 0, 0.50) 55%,
-        transparent 100%
-    );
-    padding-bottom: 12px;
+    background: rgba(15, 15, 15, 0.97);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    box-shadow: 0 2px 20px rgba(0,0,0,0.3);
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
 }
 
 .nav-link {
@@ -385,8 +385,9 @@ body {
     background-size: cover;
     background-position: center center;
     opacity: 0;
+    /* parallax: slide moves at different speed than page via JS transform */
+    will-change: opacity, transform;
     transition: opacity 1.4s cubic-bezier(0.4, 0, 0.2, 1);
-    will-change: opacity;
 }
 
 .slide.active { opacity: 1; z-index: 2; }
