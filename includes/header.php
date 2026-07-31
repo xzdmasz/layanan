@@ -65,8 +65,11 @@ require_once __DIR__ . '/db.php';
                 <div class="dropdown-panel" id="layanan-menu" role="menu" aria-label="Sub-menu Layanan">
                     <a href="layanan-pengaduan.php" class="dropdown-item" role="menuitem">
                         <div class="dropdown-item-icon icon-kesehatan">
-                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
+                            <!-- Stethoscope Vector SVG -->
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M4.8 2.3A.3.3 0 0 0 4.5 2h-1a.5.5 0 0 0-.5.5V9a5 5 0 0 0 10 0V2.5a.5.5 0 0 0-.5-.5h-1a.3.3 0 0 0-.3.3v6.7a3.2 3.2 0 0 1-6.4 0V2.3z"/>
+                                <path d="M8 14v1a5 5 0 0 0 10 0v-3"/>
+                                <circle cx="18" cy="10" r="2.5" fill="currentColor"/>
                             </svg>
                         </div>
                         <div class="dropdown-item-body">
@@ -81,8 +84,14 @@ require_once __DIR__ . '/db.php';
                     </a>
                     <a href="layanan-hukum.php" class="dropdown-item" role="menuitem">
                         <div class="dropdown-item-icon icon-hukum">
-                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                            <!-- Scales of Justice (Timbangan) Vector SVG -->
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M12 3v17"/>
+                                <path d="M5 20h14"/>
+                                <path d="M4 7h16"/>
+                                <path d="M4 7l-2 5c0 1.7 1.3 3 3 3s3-1.3 3-3L6 7"/>
+                                <path d="M20 7l-2 5c0 1.7 1.3 3 3 3s3-1.3 3-3L18 7"/>
+                                <circle cx="12" cy="3" r="1.5" fill="currentColor"/>
                             </svg>
                         </div>
                         <div class="dropdown-item-body">
@@ -171,21 +180,28 @@ $isLayananActive = ($currentPage === 'layanan-pengaduan.php' || $currentPage ===
     <div class="bottom-nav-fab-wrap" id="fab-layanan-wrap">
         <!-- Floating Speed Dial Bubbles -->
         <div class="fab-speed-dial" id="fab-speed-dial" aria-hidden="true">
-            <!-- Lingkaran 1: Kesehatan -->
+            <!-- Lingkaran 1: Kesehatan (Stethoscope SVG) -->
             <a href="layanan-pengaduan.php" class="speed-dial-bubble bubble-kesehatan">
                 <div class="bubble-circle">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
+                        <path d="M4.8 2.3A.3.3 0 0 0 4.5 2h-1a.5.5 0 0 0-.5.5V9a5 5 0 0 0 10 0V2.5a.5.5 0 0 0-.5-.5h-1a.3.3 0 0 0-.3.3v6.7a3.2 3.2 0 0 1-6.4 0V2.3z"/>
+                        <path d="M8 14v1a5 5 0 0 0 10 0v-3"/>
+                        <circle cx="18" cy="10" r="2.5" fill="currentColor"/>
                     </svg>
                 </div>
                 <span class="bubble-label">Kesehatan</span>
             </a>
 
-            <!-- Lingkaran 2: Hukum -->
+            <!-- Lingkaran 2: Hukum (Scales of Justice / Timbangan SVG) -->
             <a href="layanan-hukum.php" class="speed-dial-bubble bubble-hukum">
                 <div class="bubble-circle">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                        <path d="M12 3v17"/>
+                        <path d="M5 20h14"/>
+                        <path d="M4 7h16"/>
+                        <path d="M4 7l-2 5c0 1.7 1.3 3 3 3s3-1.3 3-3L6 7"/>
+                        <path d="M20 7l-2 5c0 1.7 1.3 3 3 3s3-1.3 3-3L18 7"/>
+                        <circle cx="12" cy="3" r="1.5" fill="currentColor"/>
                     </svg>
                 </div>
                 <span class="bubble-label">Hukum</span>
