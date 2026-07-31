@@ -123,52 +123,5 @@ btn.addEventListener('click', () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
 });
 </script>
-
-<script>
-/* ── PARALLAX HERO + NAVBAR SCROLL EFFECT ── */
-(function () {
-    const navbar  = document.getElementById('navbar');
-    const hero    = document.getElementById('hero');
-    const slides  = document.querySelectorAll('#hero .slide');
-
-    // Parallax strength: 0 = no move, 0.5 = half speed, 1 = same speed
-    const PARALLAX_STRENGTH = 0.38;
-
-    let ticking = false;
-
-    function onScroll() {
-        if (ticking) return;
-        ticking = true;
-        requestAnimationFrame(update);
-    }
-
-    function update() {
-        const scrollY = window.scrollY;
-        const heroH   = hero ? hero.offsetHeight : window.innerHeight;
-
-        /* ── NAVBAR: transparent on top, solid dark when scrolled ── */
-        if (navbar) {
-            if (scrollY > 60) {
-                navbar.classList.add('scrolled');
-            } else {
-                navbar.classList.remove('scrolled');
-            }
-        }
-
-        /* ── PARALLAX on hero slides ── */
-        if (scrollY < heroH) {
-            const shift = scrollY * PARALLAX_STRENGTH;
-            slides.forEach(slide => {
-                slide.style.transform = `translateY(${shift}px)`;
-            });
-        }
-
-        ticking = false;
-    }
-
-    window.addEventListener('scroll', onScroll, { passive: true });
-    update(); // run once on load
-})();
-</script>
 </body>
 </html>

@@ -29,17 +29,17 @@ body {
         transparent 100%
     );
     padding-bottom: 12px;
-    transition: background 0.4s ease, box-shadow 0.4s ease, padding 0.4s ease;
+    transition: background 0.35s ease;
 }
 
-/* Scrolled: solid white/dark bar that shrinks */
 #navbar.scrolled {
-    background: rgba(15, 15, 15, 0.97);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    box-shadow: 0 2px 20px rgba(0,0,0,0.3);
-    padding-top: 0 !important;
-    padding-bottom: 0 !important;
+    background: linear-gradient(
+        to bottom,
+        rgba(0, 0, 0, 0.90) 0%,
+        rgba(0, 0, 0, 0.50) 55%,
+        transparent 100%
+    );
+    padding-bottom: 12px;
 }
 
 .nav-link {
@@ -385,9 +385,8 @@ body {
     background-size: cover;
     background-position: center center;
     opacity: 0;
-    /* parallax: slide moves at different speed than page via JS transform */
-    will-change: opacity, transform;
     transition: opacity 1.4s cubic-bezier(0.4, 0, 0.2, 1);
+    will-change: opacity;
 }
 
 .slide.active { opacity: 1; z-index: 2; }
@@ -613,61 +612,17 @@ body {
     color: #ffffff;
     font-size: 12.5px;
     font-weight: 500;
-    padding: 0;
+    padding: 10px 0;
     overflow: hidden;
     white-space: nowrap;
-    display: flex;
-    align-items: stretch;
-    border-bottom: 1px solid rgba(255,255,255,0.10);
-}
-
-/* Label badge di kiri */
-.announce-label {
-    background: #ffffff;
-    color: #111111;
-    font-size: 10px;
-    font-weight: 800;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    padding: 0 20px;
-    display: flex;
-    align-items: center;
-    gap: 7px;
-    flex-shrink: 0;
-    white-space: nowrap;
-    position: relative;
-    z-index: 2;
-}
-
-/* Segitiga kanan label */
-.announce-label::after {
-    content: '';
-    position: absolute;
-    right: -12px;
-    top: 0;
-    width: 0;
-    height: 100%;
-    border-style: solid;
-    border-width: 0 0 100% 12px;
-    border-color: transparent transparent #ffffff transparent;
-}
-
-/* Area scroll ticker */
-.announce-ticker-wrap {
-    flex: 1;
-    overflow: hidden;
-    position: relative;
-    padding: 9px 0;
-    /* fade kiri & kanan */
-    mask-image: linear-gradient(to right, transparent 0%, black 3%, black 97%, transparent 100%);
-    -webkit-mask-image: linear-gradient(to right, transparent 0%, black 3%, black 97%, transparent 100%);
+    letter-spacing: 0.02em;
+    border-bottom: 1px solid #222222;
 }
 
 .ticker-track {
     display: inline-flex;
     gap: 60px;
-    animation: ticker 38s linear infinite;
-    letter-spacing: 0.02em;
+    animation: ticker 35s linear infinite;
 }
 
 .ticker-track:hover { animation-play-state: paused; }
