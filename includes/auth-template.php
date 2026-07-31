@@ -12,6 +12,7 @@
 // $redirect : string
 
 $redirectParam = $redirect ? '?redirect=' . urlencode($redirect) : '';
+$isRegister    = ($activeMode === 'register');
 ?>
 <!DOCTYPE html>
 <html lang="id">
@@ -19,7 +20,7 @@ $redirectParam = $redirect ? '?redirect=' . urlencode($redirect) : '';
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Portal Warga — Sistem Pusat Layanan Desa Sungai Bakau Kecil">
-    <title><?= ($activeMode === 'register') ? 'Daftar Akun' : 'Masuk' ?> — Desa Sungai Bakau Kecil</title>
+    <title><?= $isRegister ? 'Daftar Akun' : 'Masuk' ?> — Desa Sungai Bakau Kecil</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -42,7 +43,7 @@ $redirectParam = $redirect ? '?redirect=' . urlencode($redirect) : '';
             display: flex;
         }
 
-        /* ── FORM CONTAINERS ── */
+        /* ── DESKTOP FORM CONTAINERS ── */
         .form-container {
             position: absolute;
             top: 0;
@@ -257,11 +258,11 @@ $redirectParam = $redirect ? '?redirect=' . urlencode($redirect) : '';
             color: #2563eb;
         }
 
-        /* ── OVERLAY CONTAINER & PANELS ── */
+        /* ── DESKTOP OVERLAY CONTAINER & PANELS ── */
         .overlay-container {
             position: absolute;
             top: 0;
-            left: 0; /* POSISI KIRI SAAT LOGIN MODE */
+            left: 0;
             width: 50%;
             height: 100%;
             overflow: hidden;
@@ -269,7 +270,6 @@ $redirectParam = $redirect ? '?redirect=' . urlencode($redirect) : '';
             z-index: 100;
         }
 
-        /* SAAT REGISTER MODE: OVERLAY SLIDE KE KANAN (50% TO 100%) */
         .auth-container.right-panel-active .overlay-container {
             transform: translateX(100%);
         }
@@ -301,7 +301,6 @@ $redirectParam = $redirect ? '?redirect=' . urlencode($redirect) : '';
             transition: transform 0.65s cubic-bezier(0.65, 0, 0.35, 1);
         }
 
-        /* OVERLAY LEFT — BANNER LOGIN (bg2.png) TAMPIL DI KIRI SAAT LOGIN MODE */
         .overlay-left {
             left: 0;
             transform: translateX(0);
@@ -311,7 +310,6 @@ $redirectParam = $redirect ? '?redirect=' . urlencode($redirect) : '';
             transform: translateX(-20%);
         }
 
-        /* OVERLAY RIGHT — BANNER REGISTER (bg3.png) TAMPIL DI KANAN SAAT REGISTER MODE */
         .overlay-right {
             left: 50%;
             transform: translateX(20%);
@@ -321,7 +319,6 @@ $redirectParam = $redirect ? '?redirect=' . urlencode($redirect) : '';
             transform: translateX(0);
         }
 
-        /* Background Images for Overlay Panels */
         .overlay-bg {
             position: absolute;
             inset: 0;
@@ -354,7 +351,6 @@ $redirectParam = $redirect ? '?redirect=' . urlencode($redirect) : '';
             justify-content: space-between;
         }
 
-        /* Top Bar inside Overlay */
         .auth-hero-top {
             display: flex;
             align-items: center;
@@ -408,7 +404,6 @@ $redirectParam = $redirect ? '?redirect=' . urlencode($redirect) : '';
             letter-spacing: 0.03em;
         }
 
-        /* Bottom Content inside Overlay */
         .auth-hero-bottom {
             max-width: 480px;
             padding-bottom: 24px;
@@ -432,7 +427,6 @@ $redirectParam = $redirect ? '?redirect=' . urlencode($redirect) : '';
             margin-bottom: 24px;
         }
 
-        /* Ghost Button inside Overlay */
         .overlay-ghost-btn {
             display: inline-flex;
             align-items: center;
@@ -458,73 +452,161 @@ $redirectParam = $redirect ? '?redirect=' . urlencode($redirect) : '';
             box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
         }
 
-        /* ── RESPONSIVE MOBILE ── */
+        /* ── RESPONSIVE MOBILE (≤ 900px) — VERTICAL SLIDE & HERO BANNER ── */
         @media (max-width: 900px) {
             .auth-container {
                 flex-direction: column;
                 min-height: 100vh;
+                width: 100vw;
                 position: relative;
+                background: #ffffff;
             }
+
             .overlay-container {
-                display: none; /* Mobile modal view */
+                display: none !important;
             }
+
+            /* Mobile Hero Banner Top */
+            .mobile-hero-banner {
+                display: flex !important;
+                position: relative;
+                width: 100%;
+                min-height: 220px;
+                background-size: cover;
+                background-position: center;
+                padding: 22px 20px 20px;
+                flex-direction: column;
+                justify-content: space-between;
+                color: #ffffff;
+                overflow: hidden;
+                transition: background-image 0.5s ease-in-out;
+            }
+
+            .mobile-hero-overlay {
+                position: absolute;
+                inset: 0;
+                background: linear-gradient(180deg, rgba(8, 12, 18, 0.74) 0%, rgba(8, 12, 18, 0.92) 100%);
+                z-index: 1;
+            }
+
+            .mobile-hero-top,
+            .mobile-hero-bottom {
+                position: relative;
+                z-index: 2;
+            }
+
+            .mobile-hero-top {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+            }
+
+            .mobile-hero-title {
+                font-family: 'Playfair Display', serif;
+                font-size: 1.5rem;
+                font-weight: 700;
+                color: #ffffff;
+                margin-bottom: 6px;
+                line-height: 1.25;
+            }
+
+            .mobile-hero-desc {
+                font-size: 12.5px;
+                color: rgba(255, 255, 255, 0.80);
+                line-height: 1.5;
+                display: -webkit-box;
+                -webkit-line-clamp: 2;
+                -webkit-box-orient: vertical;
+                overflow: hidden;
+            }
+
+            /* Form Containers on Mobile with Vertical Slide */
             .form-container {
                 position: relative;
                 width: 100% !important;
                 left: 0 !important;
+                top: 0 !important;
                 transform: none !important;
-                opacity: 1 !important;
-                padding: 36px 24px;
-                min-height: 100vh;
+                padding: 28px 20px 48px;
+                min-height: auto;
+                flex: 1;
+                overflow-y: visible;
             }
+
+            /* Vertical Slide Animations on Mobile */
             .sign-in-container {
                 display: flex;
+                animation: vSlideInDown 0.5s cubic-bezier(0.65, 0, 0.35, 1) forwards;
             }
+
             .sign-up-container {
                 display: none;
+                animation: vSlideInUp 0.5s cubic-bezier(0.65, 0, 0.35, 1) forwards;
             }
+
             .auth-container.right-panel-active .sign-in-container {
                 display: none;
             }
+
             .auth-container.right-panel-active .sign-up-container {
                 display: flex;
-            }
-            .auth-mobile-header {
-                width: 100%;
-                display: flex;
-                align-items: center;
-                justify-content: space-between;
-                margin-bottom: 32px;
-                padding-bottom: 16px;
-                border-bottom: 1px solid #e2e8f0;
+                animation: vSlideInUp 0.5s cubic-bezier(0.65, 0, 0.35, 1) forwards;
             }
         }
+
         @media (min-width: 901px) {
-            .auth-mobile-header { display: none; }
+            .mobile-hero-banner {
+                display: none !important;
+            }
+        }
+
+        @keyframes vSlideInDown {
+            0% { transform: translateY(-40px); opacity: 0; }
+            100% { transform: translateY(0); opacity: 1; }
+        }
+
+        @keyframes vSlideInUp {
+            0% { transform: translateY(40px); opacity: 0; }
+            100% { transform: translateY(0); opacity: 1; }
         }
     </style>
 </head>
 <body>
 
-<div class="auth-container <?= ($activeMode === 'register') ? 'right-panel-active' : '' ?>" id="auth-container">
+<div class="auth-container <?= $isRegister ? 'right-panel-active' : '' ?>" id="auth-container">
 
-    <!-- 1. SIGN IN FORM (LOGIN) — FORM MASUK DI SEBELAH KANAN -->
-    <div class="form-container sign-in-container">
-        <!-- Mobile Top Header -->
-        <div class="auth-mobile-header">
-            <a href="index.php" class="auth-back-link" style="color:#0f172a;">
+    <!-- MOBILE HERO BANNER (Top Banner with Image on Mobile) -->
+    <div class="mobile-hero-banner" id="mobile-hero-bg" style="background-image: url('assets/images/<?= $isRegister ? 'bg3.png' : 'bg2.png' ?>');">
+        <div class="mobile-hero-overlay"></div>
+
+        <div class="mobile-hero-top">
+            <a href="index.php" class="auth-back-link">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="15 18 9 12 15 6"/></svg>
                 Kembali
             </a>
             <div class="auth-brand-badge">
                 <img src="assets/images/logo.png" alt="Logo" style="height:32px;">
                 <div class="auth-brand-text">
-                    <div class="auth-brand-sub" style="color:#64748b;">Desa</div>
-                    <div class="auth-brand-name" style="color:#0f172a;">Sungai Bakau Kecil</div>
+                    <div class="auth-brand-sub">Desa</div>
+                    <div class="auth-brand-name">Sungai Bakau Kecil</div>
                 </div>
             </div>
         </div>
 
+        <div class="mobile-hero-bottom">
+            <h2 class="mobile-hero-title" id="mobile-hero-title">
+                <?= $isRegister ? 'Dapatkan Akses Layanan Digital Warga' : 'Sistem Pusat Layanan &amp; Pengaduan Warga Desa' ?>
+            </h2>
+            <p class="mobile-hero-desc" id="mobile-hero-desc">
+                <?= $isRegister
+                    ? 'Daftarkan akun Anda hanya dalam beberapa langkah untuk mulai memanfaatkan layanan publik desa.'
+                    : 'Bergabunglah dengan portal digital Desa Sungai Bakau Kecil untuk menyampaikan laporan pengaduan penyakit lingkungan &amp; hukum.' ?>
+            </p>
+        </div>
+    </div>
+
+    <!-- 1. SIGN IN FORM (LOGIN) — FORM MASUK DI SEBELAH KANAN (DESKTOP) -->
+    <div class="form-container sign-in-container">
         <div class="auth-form-box">
             <h2 class="auth-form-title">Masuk</h2>
             <p class="auth-form-subtitle">Masukkan kredensial Anda untuk mengakses akun Anda.</p>
@@ -575,23 +657,8 @@ $redirectParam = $redirect ? '?redirect=' . urlencode($redirect) : '';
         </div>
     </div>
 
-    <!-- 2. SIGN UP FORM (REGISTER) — FORM DAFTAR DI SEBELAH KIRI -->
+    <!-- 2. SIGN UP FORM (REGISTER) — FORM DAFTAR DI SEBELAH KIRI (DESKTOP) -->
     <div class="form-container sign-up-container">
-        <!-- Mobile Top Header -->
-        <div class="auth-mobile-header">
-            <a href="index.php" class="auth-back-link" style="color:#0f172a;">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="15 18 9 12 15 6"/></svg>
-                Kembali
-            </a>
-            <div class="auth-brand-badge">
-                <img src="assets/images/logo.png" alt="Logo" style="height:32px;">
-                <div class="auth-brand-text">
-                    <div class="auth-brand-sub" style="color:#64748b;">Desa</div>
-                    <div class="auth-brand-name" style="color:#0f172a;">Sungai Bakau Kecil</div>
-                </div>
-            </div>
-        </div>
-
         <div class="auth-form-box">
             <h2 class="auth-form-title">Daftar</h2>
             <p class="auth-form-subtitle">Isi data diri Anda untuk membuat akun warga baru.</p>
@@ -661,7 +728,7 @@ $redirectParam = $redirect ? '?redirect=' . urlencode($redirect) : '';
         </div>
     </div>
 
-    <!-- 3. SLIDING OVERLAY CONTAINER -->
+    <!-- 3. DESKTOP SLIDING OVERLAY CONTAINER -->
     <div class="overlay-container">
         <div class="overlay">
 
@@ -751,9 +818,12 @@ function togglePw(id, btn) {
 
 // Seamless Sliding Panel Toggle & Push State
 document.addEventListener('DOMContentLoaded', function () {
-    const container  = document.getElementById('auth-container');
-    const switchBtns = document.querySelectorAll('.js-switch-btn');
-    const redirect   = <?= json_encode($redirectParam) ?>;
+    const container      = document.getElementById('auth-container');
+    const switchBtns     = document.querySelectorAll('.js-switch-btn');
+    const redirect       = <?= json_encode($redirectParam) ?>;
+    const mobileHeroImg  = document.getElementById('mobile-hero-bg');
+    const mobileTitle    = document.getElementById('mobile-hero-title');
+    const mobileDesc     = document.getElementById('mobile-hero-desc');
 
     switchBtns.forEach(btn => {
         btn.addEventListener('click', function (e) {
@@ -764,29 +834,35 @@ document.addEventListener('DOMContentLoaded', function () {
                 container.classList.add('right-panel-active');
                 history.pushState({ mode: 'register' }, '', 'register.php' + redirect);
                 document.title = 'Daftar Akun — Desa Sungai Bakau Kecil';
+                if (mobileHeroImg) mobileHeroImg.style.backgroundImage = "url('assets/images/bg3.png')";
+                if (mobileTitle)   mobileTitle.textContent = "Dapatkan Akses Layanan Digital Warga";
+                if (mobileDesc)    mobileDesc.textContent = "Daftarkan akun Anda hanya dalam beberapa langkah untuk mulai memanfaatkan layanan publik desa.";
             } else {
                 container.classList.remove('right-panel-active');
                 history.pushState({ mode: 'login' }, '', 'login.php' + redirect);
                 document.title = 'Masuk — Desa Sungai Bakau Kecil';
+                if (mobileHeroImg) mobileHeroImg.style.backgroundImage = "url('assets/images/bg2.png')";
+                if (mobileTitle)   mobileTitle.textContent = "Sistem Pusat Layanan & Pengaduan Warga Desa";
+                if (mobileDesc)    mobileDesc.textContent = "Bergabunglah dengan portal digital Desa Sungai Bakau Kecil untuk menyampaikan laporan pengaduan penyakit lingkungan & hukum.";
             }
         });
     });
 
     // Handle Browser Back/Forward buttons
     window.addEventListener('popstate', function (e) {
-        if (e.state && e.state.mode === 'register') {
+        const isReg = (e.state && e.state.mode === 'register') || window.location.pathname.endsWith('register.php');
+        if (isReg) {
             container.classList.add('right-panel-active');
             document.title = 'Daftar Akun — Desa Sungai Bakau Kecil';
-        } else if (e.state && e.state.mode === 'login') {
+            if (mobileHeroImg) mobileHeroImg.style.backgroundImage = "url('assets/images/bg3.png')";
+            if (mobileTitle)   mobileTitle.textContent = "Dapatkan Akses Layanan Digital Warga";
+            if (mobileDesc)    mobileDesc.textContent = "Daftarkan akun Anda hanya dalam beberapa langkah untuk mulai memanfaatkan layanan publik desa.";
+        } else {
             container.classList.remove('right-panel-active');
             document.title = 'Masuk — Desa Sungai Bakau Kecil';
-        } else {
-            // Fallback check URL
-            if (window.location.pathname.endsWith('register.php')) {
-                container.classList.add('right-panel-active');
-            } else {
-                container.classList.remove('right-panel-active');
-            }
+            if (mobileHeroImg) mobileHeroImg.style.backgroundImage = "url('assets/images/bg2.png')";
+            if (mobileTitle)   mobileTitle.textContent = "Sistem Pusat Layanan & Pengaduan Warga Desa";
+            if (mobileDesc)    mobileDesc.textContent = "Bergabunglah dengan portal digital Desa Sungai Bakau Kecil untuk menyampaikan laporan pengaduan penyakit lingkungan & hukum.";
         }
     });
 });
