@@ -2,12 +2,12 @@
 $pageTitle = 'Beranda';
 require_once 'includes/db.php';
 
-// Ambil statistik dari database, fallback ke default jika gagal
+// Statistik layanan — fallback ke default jika DB belum terhubung
 $statsDefault = [
-    ['kunci'=>'penduduk',     'label'=>'Penduduk',          'nilai'=>'3.847', 'target_angka'=>3847],
-    ['kunci'=>'kk',           'label'=>'Kepala Keluarga',   'nilai'=>'1.124', 'target_angka'=>1124],
-    ['kunci'=>'layanan_bulan','label'=>'Layanan Bulan Ini', 'nilai'=>'247',   'target_angka'=>247],
-    ['kunci'=>'kepuasan',     'label'=>'Kepuasan Warga',    'nilai'=>'98%',   'target_angka'=>98],
+    ['kunci'=>'pengaduan',    'label'=>'Total Pengaduan',    'nilai'=>'247',  'target_angka'=>247],
+    ['kunci'=>'hukum',        'label'=>'Kasus Hukum Dibantu','nilai'=>'89',   'target_angka'=>89],
+    ['kunci'=>'kesehatan',    'label'=>'Laporan Kesehatan',  'nilai'=>'158',  'target_angka'=>158],
+    ['kunci'=>'kepuasan',     'label'=>'Kepuasan Pengguna',  'nilai'=>'96%',  'target_angka'=>96],
 ];
 try {
     $db       = getDB();
@@ -27,24 +27,24 @@ require_once 'includes/header.php';
 <section id="hero" aria-label="Beranda Slider">
 
     <!-- Slide 1 (Initial) -->
-    <div class="slide active" style="background-image:url('assets/images/bg3.png'); background-position:center 65%;" role="img" aria-label="Pemandangan Desa Sungai Bakau Kecil"></div>
+    <div class="slide active" style="background-image:url('assets/images/bg3.png'); background-position:center 65%;" role="img" aria-label="Layanan Kesehatan Desa Sungai Bakau Kecil"></div>
 
     <!-- Slide 2 -->
-    <div class="slide" style="background-image:url('assets/images/bg1.jpg'); background-position:center 55%;" role="img" aria-label="Kawasan Mangrove Sungai Bakau Kecil saat senja"></div>
+    <div class="slide" style="background-image:url('assets/images/bg1.jpg'); background-position:center 55%;" role="img" aria-label="Konsultasi Hukum Warga Desa Sungai Bakau Kecil"></div>
 
     <!-- Slide 3 -->
-    <div class="slide" style="background-image:url('assets/images/bg2.png'); background-position:center 40%;" role="img" aria-label="Hutan Bakau Sungai Bakau Kecil golden hour"></div>
+    <div class="slide" style="background-image:url('assets/images/bg2.png'); background-position:center 40%;" role="img" aria-label="Program KKN Layanan Desa Sungai Bakau Kecil"></div>
 
     <!-- Main content -->
     <div class="hero-content">
         <div class="hero-inner">
             <h1 class="hero-title">
-                Sistem Pusat Layanan<br>Desa Sungai Bakau Kecil
+                Pusat Layanan Hukum<br>&amp; Kesehatan Warga
             </h1>
             <p class="hero-quote">
-                "Ajukan pengaduan, cek informasi, dan akses layanan desa dengan mudah melalui satu genggaman tangan."
+                "Akses layanan hukum dan kesehatan secara mudah, gratis, dan terpercaya — hadir untuk warga Desa Sungai Bakau Kecil."
             </p>
-            <p class="hero-author">Desa Sungai Bakau Kecil — Kalimantan Barat</p>
+            <p class="hero-author">Program KKN — Desa Sungai Bakau Kecil, Kalimantan Barat</p>
         </div>
     </div>
 
@@ -80,26 +80,26 @@ require_once 'includes/header.php';
 
 
 <!-- ======================================================
-     ANNOUNCEMENT BAR (Solid Black)
+     ANNOUNCEMENT BAR
      ====================================================== -->
-<div class="announce-bar" aria-label="Pengumuman Desa">
+<div class="announce-bar" aria-label="Informasi Layanan">
     <div class="ticker-track" id="ticker">
-        <span>Kantor Desa buka Senin–Jumat pukul 08.00–16.00 WIB</span>
+        <span>Layanan konsultasi hukum tersedia setiap Senin–Jumat pukul 09.00–15.00 WIB</span>
         <span class="ticker-sep">|</span>
         <span>Posyandu Balita: 5 Agustus 2025, Pukul 09.00 WIB di Balai Desa</span>
         <span class="ticker-sep">|</span>
-        <span>Program air bersih: Pendaftaran dibuka hingga 31 Juli 2025</span>
+        <span>Pelaporan masalah kesehatan lingkungan kini tersedia secara online</span>
         <span class="ticker-sep">|</span>
-        <span>Layanan Surat Keterangan kini tersedia secara online</span>
+        <span>Konsultasi hukum gratis untuk warga — Daftar sekarang tanpa biaya</span>
         <span class="ticker-sep">|</span>
         <!-- Duplicate for seamless loop -->
-        <span>Kantor Desa buka Senin–Jumat pukul 08.00–16.00 WIB</span>
+        <span>Layanan konsultasi hukum tersedia setiap Senin–Jumat pukul 09.00–15.00 WIB</span>
         <span class="ticker-sep">|</span>
         <span>Posyandu Balita: 5 Agustus 2025, Pukul 09.00 WIB di Balai Desa</span>
         <span class="ticker-sep">|</span>
-        <span>Program air bersih: Pendaftaran dibuka hingga 31 Juli 2025</span>
+        <span>Pelaporan masalah kesehatan lingkungan kini tersedia secara online</span>
         <span class="ticker-sep">|</span>
-        <span>Layanan Surat Keterangan kini tersedia secara online</span>
+        <span>Konsultasi hukum gratis untuk warga — Daftar sekarang tanpa biaya</span>
         <span class="ticker-sep">|</span>
     </div>
 </div>
@@ -108,7 +108,7 @@ require_once 'includes/header.php';
 <!-- ======================================================
      STATS
      ====================================================== -->
-<section class="stats-section py-12 reveal" aria-label="Statistik Desa">
+<section class="stats-section py-12 reveal" aria-label="Statistik Layanan">
     <div class="container">
         <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:0; border:1px solid #e5e5e5;">
             <?php foreach ($stats as $i => $s): ?>
@@ -129,11 +129,11 @@ require_once 'includes/header.php';
     <div class="container">
 
         <div class="reveal" style="margin-bottom:40px;">
-            <span class="section-label">Apa yang bisa kami bantu?</span>
+            <span class="section-label">Pilih Layanan</span>
             <span class="divider"></span>
-            <h2 class="section-title" id="layanan-heading" style="font-size:2rem;">Layanan Desa</h2>
-            <p style="font-size:14px; color:#666; max-width:500px; line-height:1.7; margin:0;">
-                Akses berbagai layanan desa secara mudah, cepat, dan transparan — kapan saja dan di mana saja.
+            <h2 class="section-title" id="layanan-heading" style="font-size:2rem;">Layanan Kami</h2>
+            <p style="font-size:14px; color:#666; max-width:520px; line-height:1.7; margin:0;">
+                Dua layanan utama yang kami sediakan secara gratis untuk seluruh warga Desa Sungai Bakau Kecil — mudah diakses kapan saja dan di mana saja.
             </p>
         </div>
 
@@ -144,10 +144,10 @@ require_once 'includes/header.php';
                 <div class="service-img-overlay"></div>
                 <div class="service-img-content">
                     <span class="service-img-tag">Kesehatan</span>
-                    <h3 class="service-img-title">Layanan & Pengaduan Penyakit</h3>
-                    <p class="service-img-desc">Laporkan masalah kesehatan, penyakit menular, atau kondisi lingkungan yang membahayakan warga di lingkungan desa.</p>
+                    <h3 class="service-img-title">Layanan &amp; Pengaduan Kesehatan</h3>
+                    <p class="service-img-desc">Laporkan masalah kesehatan, penyakit menular, atau kondisi lingkungan yang membahayakan warga. Tim kami akan menindaklanjuti setiap laporan dengan cepat.</p>
                     <span class="service-img-cta">
-                        Lihat Layanan
+                        Ajukan Pengaduan
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
                     </span>
                 </div>
@@ -158,11 +158,11 @@ require_once 'includes/header.php';
                 <div class="service-img-bg" style="background-image:url('assets/images/service-hukum.png');"></div>
                 <div class="service-img-overlay"></div>
                 <div class="service-img-content">
-                    <span class="service-img-tag">Hukum & Administrasi</span>
-                    <h3 class="service-img-title">Layanan Hukum</h3>
-                    <p class="service-img-desc">Dapatkan bantuan dan konsultasi hukum untuk permasalahan warga, sengketa tanah, administrasi kependudukan, dan kebutuhan hukum lainnya.</p>
+                    <span class="service-img-tag">Hukum &amp; Bantuan Hukum</span>
+                    <h3 class="service-img-title">Konsultasi &amp; Bantuan Hukum</h3>
+                    <p class="service-img-desc">Dapatkan konsultasi hukum gratis untuk permasalahan warga, sengketa tanah, administrasi kependudukan, dan kebutuhan hukum lainnya bersama tim paralegal kami.</p>
                     <span class="service-img-cta">
-                        Lihat Layanan
+                        Ajukan Konsultasi
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
                     </span>
                 </div>
@@ -173,7 +173,7 @@ require_once 'includes/header.php';
 
 
 <!-- ======================================================
-     TENTANG DESA
+     TENTANG PROGRAM
      ====================================================== -->
 <section aria-labelledby="about-heading" style="background:#fafafa; padding:72px 0; border-top:1px solid #e5e5e5;">
     <div class="container">
@@ -186,16 +186,16 @@ require_once 'includes/header.php';
 
             <!-- Text -->
             <div>
-                <span class="section-label">Tentang Desa</span>
+                <span class="section-label">Tentang Program</span>
                 <span class="divider"></span>
                 <h2 class="section-title" id="about-heading" style="font-size:1.9rem; margin-bottom:18px;">
-                    Desa dengan Kawasan<br>Mangrove yang Kaya
+                    Layanan Digital untuk<br>Warga Desa
                 </h2>
                 <p style="font-size:14px; color:#555; line-height:1.8; margin:0 0 14px;">
-                    Desa Sungai Bakau Kecil terletak di Kabupaten Mempawah, Kalimantan Barat. Dikenal dengan kawasan hutan mangrove yang luas, ekosistem pesisir yang kaya, dan masyarakat yang guyub.
+                    Web ini merupakan hasil program <strong>Kuliah Kerja Nyata (KKN)</strong> yang dihadirkan untuk memudahkan warga Desa Sungai Bakau Kecil dalam mengakses layanan hukum dan kesehatan secara digital.
                 </p>
                 <p style="font-size:14px; color:#555; line-height:1.8; margin:0 0 28px;">
-                    Melalui sistem pusat layanan digital ini, kami berkomitmen memberikan pelayanan publik yang mudah, transparan, dan akuntabel kepada seluruh warga.
+                    Seluruh layanan bersifat <strong>gratis dan terbuka</strong> untuk semua warga. Laporan dan pengaduan yang masuk akan diteruskan langsung ke Kantor Desa dan Lembaga Bantuan Hukum (LBH) yang bermitra.
                 </p>
                 <div style="display:flex; gap:12px; flex-wrap:wrap;">
                     <a href="tentang.php" class="btn-dark">
@@ -215,7 +215,7 @@ require_once 'includes/header.php';
 <!-- ======================================================
      CTA SECTION (Black Theme)
      ====================================================== -->
-<section class="cta-section" style="padding:80px 0;" aria-label="Hubungi Kami">
+<section class="cta-section" style="padding:80px 0;" aria-label="Ajukan Layanan">
     <div class="container" style="position:relative; z-index:2;">
         <div style="max-width:620px; margin:0 auto; text-align:center;" class="reveal">
             <span class="section-label" style="color:rgba(255,255,255,0.60);">Butuh Bantuan?</span>
@@ -223,11 +223,11 @@ require_once 'includes/header.php';
                 Ada yang perlu<br>kami bantu?
             </h2>
             <p style="font-size:14px; color:rgba(255,255,255,0.70); margin:0 0 32px; line-height:1.7;">
-                Tim pelayanan desa siap membantu Anda. Sampaikan pengaduan atau pertanyaan Anda sekarang juga.
+                Tim KKN kami siap membantu. Ajukan pengaduan kesehatan atau konsultasi hukum Anda sekarang — gratis dan mudah.
             </p>
             <div style="display:flex; justify-content:center; gap:14px; flex-wrap:wrap;">
-                <a href="layanan-pengaduan.php" class="btn-primary">Buat Pengaduan</a>
-                <a href="tel:05611234567"        class="btn-outline">Hubungi Kantor Desa</a>
+                <a href="layanan-pengaduan.php" class="btn-primary">Pengaduan Kesehatan</a>
+                <a href="layanan-hukum.php"     class="btn-outline">Bantuan Hukum</a>
             </div>
         </div>
     </div>
