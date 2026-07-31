@@ -1732,9 +1732,16 @@ body {
     .follow-us   { display: none; }
     .stat-num    { font-size: 2rem; }
 
-    /* Stats 1 col on very small */
-    .stats-section > .container > div {
-        grid-template-columns: repeat(2, 1fr) !important;
+    /* Stats 1 col on mobile */
+    .stats-grid-wrap {
+        grid-template-columns: 1fr !important;
+    }
+    .stats-grid-wrap .stat-item {
+        border-right: none !important;
+        border-bottom: 1px solid #e5e5e5;
+    }
+    .stats-grid-wrap .stat-item:last-child {
+        border-bottom: none !important;
     }
 }
 

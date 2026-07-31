@@ -2,18 +2,19 @@
 $pageTitle = 'Beranda';
 require_once 'includes/db.php';
 
-// Statistik layanan — fallback ke default jika DB belum terhubung
+// Statistik layanan — fallback ke default jika DB belum terhubung (3 item utama)
 $statsDefault = [
-    ['kunci'=>'pengaduan',    'label'=>'Total Pengaduan',    'nilai'=>'247',  'target_angka'=>247],
-    ['kunci'=>'hukum',        'label'=>'Kasus Hukum Dibantu','nilai'=>'89',   'target_angka'=>89],
-    ['kunci'=>'kesehatan',    'label'=>'Laporan Kesehatan',  'nilai'=>'158',  'target_angka'=>158],
-    ['kunci'=>'kepuasan',     'label'=>'Kepuasan Pengguna',  'nilai'=>'96%',  'target_angka'=>96],
+    ['kunci'=>'penduduk',     'label'=>'Penduduk',           'nilai'=>'3.847', 'target_angka'=>3847],
+    ['kunci'=>'kk',           'label'=>'Kepala Keluarga',    'nilai'=>'1.124', 'target_angka'=>1124],
+    ['kunci'=>'layanan_bulan','label'=>'Layanan Bulan Ini',  'nilai'=>'247',   'target_angka'=>247],
 ];
 try {
     $db       = getDB();
-    $stmt     = $db->query('SELECT * FROM statistik_desa ORDER BY id ASC');
+    $stmt     = $db->query("SELECT * FROM statistik_desa WHERE kunci != 'kepuasan' ORDER BY id ASC");
     $statsDB  = $stmt->fetchAll();
-    $stats    = array_map(fn($r) => ['label'=>$r['label'],'num'=>$r['nilai'],'target'=>(int)$r['target_angka']], $statsDB);
+    $stats    = !empty($statsDB)
+        ? array_map(fn($r) => ['label'=>$r['label'],'num'=>$r['nilai'],'target'=>(int)$r['target_angka']], $statsDB)
+        : array_map(fn($r) => ['label'=>$r['label'],'num'=>$r['nilai'],'target'=>$r['target_angka']], $statsDefault);
 } catch (Exception $e) {
     $stats = array_map(fn($r) => ['label'=>$r['label'],'num'=>$r['nilai'],'target'=>$r['target_angka']], $statsDefault);
 }
@@ -106,13 +107,24 @@ require_once 'includes/header.php';
 
 
 <!-- ======================================================
-     STATS
+     STATS (3 Items: Penduduk, Kepala Keluarga, Layanan Bulan Ini)
      ====================================================== -->
-<section class="stats-section py-12 reveal" aria-label="Statistik Layanan">
+<section class="stats-section py-12 reveal" aria-label="Statistik Layanan" style="padding:60px 0;">
     <div class="container">
-        <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:0; border:1px solid #e5e5e5;">
+        <!-- Section Header -->
+        <div style="text-align:center; margin-bottom:32px;">
+            <span class="section-label" style="display:inline-block; margin-bottom:6px;">DATA &amp; STATISTIK DESA</span>
+            <h2 style="font-family:'Playfair Display',serif; font-size:1.85rem; font-weight:700; color:#111111; margin:0 0 8px; line-height:1.2;">
+                Sekilas Demografi &amp; Layanan Desa
+            </h2>
+            <p style="font-size:13.5px; color:#666666; margin:0 auto; max-width:520px; line-height:1.6;">
+                Informasi kependudukan dan statistik rekapitulasi pelayanan warga Desa Sungai Bakau Kecil
+            </p>
+        </div>
+
+        <div class="stats-grid-wrap" style="display:grid; grid-template-columns:repeat(3,1fr); gap:0; border:1px solid #e5e5e5; background:#ffffff;">
             <?php foreach ($stats as $i => $s): ?>
-            <div class="stat-item" style="padding:28px 20px; <?= $i < 3 ? 'border-right:1px solid #e5e5e5;' : '' ?>">
+            <div class="stat-item" style="padding:28px 20px; <?= $i < count($stats) - 1 ? 'border-right:1px solid #e5e5e5;' : '' ?>">
                 <span class="stat-num" data-target="<?= $s['target'] ?>"><?= htmlspecialchars($s['num']) ?></span>
                 <span class="stat-label"><?= htmlspecialchars($s['label']) ?></span>
             </div>
