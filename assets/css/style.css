@@ -1405,11 +1405,65 @@ body {
         filter: drop-shadow(0 2px 6px rgba(255,255,255,0.4));
     }
 
-    button.bottom-nav-item {
+    /* ── RAISED FLOATING CENTER CIRCLE (LAYANAN TAB) ── */
+    .bottom-nav-fab-wrap {
+        flex: 1;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .bottom-nav-fab {
         background: none;
         border: none;
         cursor: pointer;
         font-family: inherit;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 3px;
+        color: rgba(255, 255, 255, 0.50);
+        font-size: 10px;
+        font-weight: 500;
+        text-decoration: none;
+        margin-top: -18px;
+        transition: transform 0.2s;
+    }
+
+    .fab-circle {
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        background: #111111;
+        border: 2px solid rgba(255, 255, 255, 0.22);
+        color: #ffffff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 6px 16px rgba(0,0,0,0.5), 0 0 0 4px rgba(15,15,15,0.96);
+        transition: background 0.2s, transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .fab-circle svg {
+        width: 22px !important;
+        height: 22px !important;
+        stroke-width: 2;
+    }
+
+    .bottom-nav-fab:active .fab-circle {
+        transform: scale(0.92);
+    }
+
+    .bottom-nav-fab.active {
+        color: #ffffff;
+        font-weight: 700;
+    }
+
+    .bottom-nav-fab.active .fab-circle {
+        background: #2e7d32;
+        border-color: #81c784;
+        box-shadow: 0 6px 20px rgba(46, 125, 50, 0.5), 0 0 0 4px rgba(15,15,15,0.96);
     }
 
     /* ── BOTTOM SHEET MODAL LAYANAN ── */
@@ -1660,6 +1714,12 @@ body {
     transform: translateY(-3px) scale(1.07);
 }
 
-@media (max-width: 480px) {
-    #back-to-top { bottom: 20px; right: 20px; width: 42px; height: 42px; }
+@media (max-width: 768px) {
+    #back-to-top {
+        bottom: 82px !important;
+        right: 18px;
+        width: 44px;
+        height: 44px;
+        z-index: 9998;
+    }
 }

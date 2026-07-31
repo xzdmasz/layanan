@@ -144,14 +144,18 @@ $isLayananActive = ($currentPage === 'layanan-pengaduan.php' || $currentPage ===
         <span>Beranda</span>
     </a>
 
-    <!-- 2. Layanan (Trigger Bottom Sheet) -->
-    <button type="button" class="bottom-nav-item <?= $isLayananActive ? 'active' : '' ?>" id="btn-bottom-layanan">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/>
-            <rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/>
-        </svg>
-        <span>Layanan</span>
-    </button>
+    <!-- 2. Layanan (Floating Center Circle) -->
+    <div class="bottom-nav-fab-wrap">
+        <button type="button" class="bottom-nav-fab <?= $isLayananActive ? 'active' : '' ?>" id="btn-bottom-layanan" aria-label="Menu Layanan">
+            <div class="fab-circle">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/>
+                    <rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/>
+                </svg>
+            </div>
+            <span>Layanan</span>
+        </button>
+    </div>
 
     <!-- 3. Riwayat Laporan -->
     <a href="<?= isLoggedIn() ? 'riwayat.php' : 'login.php?redirect=riwayat.php' ?>" class="bottom-nav-item <?= ($currentPage === 'riwayat.php') ? 'active' : '' ?>">
