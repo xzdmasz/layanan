@@ -1721,11 +1721,36 @@ body {
         order: 1; /* Form comes first on mobile, sidebar comes below */
     }
 
-    /* Stats 1 col on tablet & mobile for neat centering */
+    /* ── STATS RESPONSIVE ── */
+}
+
+/* Tablet / Medium Screens: 2 cols, 3rd item centered across both cols */
+@media (max-width: 991px) and (min-width: 577px) {
+    .stats-grid-wrap {
+        grid-template-columns: repeat(2, 1fr) !important;
+    }
+    .stats-grid-wrap .stat-item {
+        border-right: none !important;
+        border-bottom: 1px solid #e5e5e5 !important;
+    }
+    .stats-grid-wrap .stat-item:nth-child(1) {
+        border-right: 1px solid #e5e5e5 !important;
+    }
+    .stats-grid-wrap .stat-item:last-child {
+        grid-column: 1 / -1 !important;
+        border-bottom: none !important;
+        text-align: center !important;
+        padding: 28px 20px !important;
+    }
+}
+
+/* Small Mobile: 1 col stacked */
+@media (max-width: 576px) {
     .stats-grid-wrap {
         grid-template-columns: 1fr !important;
     }
     .stats-grid-wrap .stat-item {
+        grid-column: auto !important;
         border-right: none !important;
         border-bottom: 1px solid #e5e5e5 !important;
         text-align: center !important;
