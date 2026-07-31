@@ -4,16 +4,19 @@ require_once 'includes/db.php';
 
 // Statistik layanan — fallback ke default jika DB belum terhubung (3 item utama)
 $statsDefault = [
-    ['kunci'=>'penduduk',     'label'=>'Penduduk',           'nilai'=>'3.847', 'target_angka'=>3847],
-    ['kunci'=>'kk',           'label'=>'Kepala Keluarga',    'nilai'=>'1.124', 'target_angka'=>1124],
-    ['kunci'=>'layanan_bulan','label'=>'Layanan Bulan Ini',  'nilai'=>'247',   'target_angka'=>247],
+    ['kunci'=>'penduduk',     'label'=>'Penduduk',            'nilai'=>'3.847', 'target_angka'=>3847],
+    ['kunci'=>'kk',           'label'=>'Kepala Keluarga',     'nilai'=>'1.124', 'target_angka'=>1124],
+    ['kunci'=>'layanan_bulan','label'=>'Keseluruhan Layanan', 'nilai'=>'247',   'target_angka'=>247],
 ];
 try {
     $db       = getDB();
     $stmt     = $db->query("SELECT * FROM statistik_desa WHERE kunci != 'kepuasan' ORDER BY id ASC");
     $statsDB  = $stmt->fetchAll();
     $stats    = !empty($statsDB)
-        ? array_map(fn($r) => ['label'=>$r['label'],'num'=>$r['nilai'],'target'=>(int)$r['target_angka']], $statsDB)
+        ? array_map(function($r) {
+            $lbl = ($r['label'] === 'Layanan Bulan Ini') ? 'Keseluruhan Layanan' : $r['label'];
+            return ['label' => $lbl, 'num' => $r['nilai'], 'target' => (int)$r['target_angka']];
+          }, $statsDB)
         : array_map(fn($r) => ['label'=>$r['label'],'num'=>$r['nilai'],'target'=>$r['target_angka']], $statsDefault);
 } catch (Exception $e) {
     $stats = array_map(fn($r) => ['label'=>$r['label'],'num'=>$r['nilai'],'target'=>$r['target_angka']], $statsDefault);
