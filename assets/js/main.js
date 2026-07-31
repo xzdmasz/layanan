@@ -248,5 +248,55 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
+    // ─────────────────────────────────────────────
+    // 7. GARAGE DOOR SCROLL LIFT EFFECT ON HERO
+    // ─────────────────────────────────────────────
+    const heroEl = document.getElementById('hero');
+    const heroContentEl = document.querySelector('.hero-content');
+
+    if (heroEl) {
+        let isTicking = false;
+
+        function updateGarageDoorEffect() {
+            const scrollY = window.scrollY;
+            const heroHeight = heroEl.offsetHeight || window.innerHeight;
+
+            if (scrollY <= heroHeight * 1.2) {
+                const progress = Math.min(scrollY / heroHeight, 1);
+                
+                // Lift hero upwards like a garage door opening into top ceiling
+                const translateY = progress * 60; // Lifts up to 60vh
+                const scale = 1 - (progress * 0.05); // Subtle 3D depth shrink
+                const borderRadius = progress * 36; // Curving bottom edge like rolling shutter
+                const contentOffset = progress * 100;
+                const contentOpacity = Math.max(1 - (progress * 1.4), 0);
+
+                heroEl.style.transform = `translate3d(0, -${translateY}vh, 0) scale(${scale})`;
+                heroEl.style.borderRadius = `0 0 ${borderRadius}px ${borderRadius}px`;
+
+                if (heroContentEl) {
+                    heroContentEl.style.transform = `translate3d(0, -${contentOffset}px, 0)`;
+                    heroContentEl.style.opacity = contentOpacity;
+                }
+            } else {
+                heroEl.style.transform = `translate3d(0, -60vh, 0) scale(0.95)`;
+                heroEl.style.borderRadius = `0 0 36px 36px`;
+            }
+        }
+
+        window.addEventListener('scroll', function () {
+            if (!isTicking) {
+                window.requestAnimationFrame(function () {
+                    updateGarageDoorEffect();
+                    isTicking = false;
+                });
+                isTicking = true;
+            }
+        }, { passive: true });
+
+        // Initial run
+        updateGarageDoorEffect();
+    }
+
 });
 

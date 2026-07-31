@@ -5,14 +5,14 @@
      ====================================================== -->
 <section id="hero" aria-label="Beranda Slider">
 
-    <!-- Slide 1 -->
-    <div class="slide active" style="background-image:url('assets/images/bg1.jpg'); background-position:center 55%;" role="img" aria-label="Kawasan Mangrove Sungai Bakau Kecil saat senja"></div>
+    <!-- Slide 1 (Initial) -->
+    <div class="slide active" style="background-image:url('assets/images/bg3.png'); background-position:center 65%;" role="img" aria-label="Pemandangan Desa Sungai Bakau Kecil"></div>
 
     <!-- Slide 2 -->
-    <div class="slide" style="background-image:url('assets/images/bg2.png'); background-position:center 40%;" role="img" aria-label="Hutan Bakau Sungai Bakau Kecil golden hour"></div>
+    <div class="slide" style="background-image:url('assets/images/bg1.jpg'); background-position:center 55%;" role="img" aria-label="Kawasan Mangrove Sungai Bakau Kecil saat senja"></div>
 
     <!-- Slide 3 -->
-    <div class="slide" style="background-image:url('assets/images/bg3.png'); background-position:center 65%;" role="img" aria-label="Pemandangan Sungai Bakau Kecil"></div>
+    <div class="slide" style="background-image:url('assets/images/bg2.png'); background-position:center 40%;" role="img" aria-label="Hutan Bakau Sungai Bakau Kecil golden hour"></div>
 
     <!-- Main content -->
     <div class="hero-content">
