@@ -142,7 +142,7 @@ body {
     background: #ffffff;
     border-radius: 6px;
     box-shadow: 0 12px 40px rgba(0,0,0,0.22), 0 2px 8px rgba(0,0,0,0.10);
-    z-index: 1000;
+    z-index: 10002;
     overflow: hidden;
     opacity: 0;
     transform: translateY(-6px) scale(0.97);
@@ -1350,9 +1350,25 @@ body {
     /* ── MOBILE BOTTOM NAVIGATION BAR (Strictly Mobile <= 768px) ── */
     body { padding-bottom: 64px; }
 
-    /* Hide desktop navbar links & auth on mobile — bottom nav replaces them */
-    .nav-desktop,
-    .nav-auth { display: none !important; }
+    /* Hide desktop nav LINKS only — profile/auth button stays in top navbar */
+    .nav-desktop { display: none !important; }
+
+    /* ── MOBILE: Profile button — compact pill in top navbar ── */
+    .nav-auth {
+        display: flex;
+        align-items: center;
+    }
+    .profile-icon-btn {
+        height: 34px;
+        padding: 0 10px 0 8px;
+        font-size: 11px;
+    }
+    .profile-btn-name {
+        max-width: 72px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
 
     .mobile-bottom-nav {
         display: flex !important;
