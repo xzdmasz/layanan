@@ -99,8 +99,26 @@ ON DUPLICATE KEY UPDATE username = username;
 
 -- Statistik beranda default
 INSERT INTO statistik_desa (kunci, label, nilai, target_angka) VALUES
-('penduduk',     'Penduduk',          '3.847', 3847),
-('kk',           'Kepala Keluarga',   '1.124', 1124),
-('layanan_bulan','Layanan Bulan Ini', '247',   247),
-('kepuasan',     'Kepuasan Warga',    '98%',   98)
+('penduduk',     'Penduduk',             '3.847', 3847),
+('kk',           'Kepala Keluarga',      '1.124', 1124),
+('layanan_bulan','Keseluruhan Layanan',  '247',   247),
+('kepuasan',     'Kepuasan Warga',       '98%',   98)
 ON DUPLICATE KEY UPDATE kunci = kunci;
+
+
+-- ─────────────────────────────────────────────
+-- Tabel: banner_slides (Gambar slider beranda)
+-- ─────────────────────────────────────────────
+CREATE TABLE IF NOT EXISTS banner_slides (
+    id         INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    posisi     TINYINT UNSIGNED NOT NULL UNIQUE COMMENT '1, 2, atau 3',
+    filename   VARCHAR(255) NOT NULL COMMENT 'Nama file di assets/images/',
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- Seed banner default
+INSERT INTO banner_slides (posisi, filename) VALUES
+(1, 'bg3.png'),
+(2, 'bg1.jpg'),
+(3, 'bg2.png')
+ON DUPLICATE KEY UPDATE posisi = posisi;

@@ -22,6 +22,14 @@ try {
     $stats = array_map(fn($r) => ['label'=>$r['label'],'num'=>$r['nilai'],'target'=>$r['target_angka']], $statsDefault);
 }
 
+// Banner slides — load dari DB, fallback ke file default
+$bannerDefault = [1 => 'bg3.png', 2 => 'bg1.jpg', 3 => 'bg2.png'];
+try {
+    $bRows = $db->query("SELECT posisi, filename FROM banner_slides ORDER BY posisi ASC")->fetchAll();
+    foreach ($bRows as $br) $bannerDefault[$br['posisi']] = $br['filename'];
+} catch (Exception $e) {}
+$banners = $bannerDefault;
+
 require_once 'includes/header.php';
 ?>
 
@@ -31,13 +39,13 @@ require_once 'includes/header.php';
 <section id="hero" aria-label="Beranda Slider">
 
     <!-- Slide 1 (Initial) -->
-    <div class="slide active" style="background-image:url('assets/images/bg3.png'); background-position:center 65%;" role="img" aria-label="Layanan Kesehatan Desa Sungai Bakau Kecil"></div>
+    <div class="slide active" style="background-image:url('assets/images/<?= htmlspecialchars($banners[1]) ?>'); background-position:center 65%;" role="img" aria-label="Layanan Kesehatan Desa Sungai Bakau Kecil"></div>
 
     <!-- Slide 2 -->
-    <div class="slide" style="background-image:url('assets/images/bg1.jpg'); background-position:center 55%;" role="img" aria-label="Konsultasi Hukum Warga Desa Sungai Bakau Kecil"></div>
+    <div class="slide" style="background-image:url('assets/images/<?= htmlspecialchars($banners[2]) ?>'); background-position:center 55%;" role="img" aria-label="Konsultasi Hukum Warga Desa Sungai Bakau Kecil"></div>
 
     <!-- Slide 3 -->
-    <div class="slide" style="background-image:url('assets/images/bg2.png'); background-position:center 40%;" role="img" aria-label="Program KKN Layanan Desa Sungai Bakau Kecil"></div>
+    <div class="slide" style="background-image:url('assets/images/<?= htmlspecialchars($banners[3]) ?>'); background-position:center 40%;" role="img" aria-label="Program KKN Layanan Desa Sungai Bakau Kecil"></div>
 
     <!-- Main content -->
     <div class="hero-content">
