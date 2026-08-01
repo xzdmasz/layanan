@@ -17,7 +17,39 @@
 
 ---
 
-## 🗂️ Struktur Folder (Target Akhir)
+## 🔐 Admin Dashboard
+
+### Akses Admin
+| Item | Detail |
+|---|---|
+| **URL Login** | `http://localhost/desa_sungaibakaukecil/admin/login.php` |
+| **Username** | `admin` |
+| **Password** | `admin123` |
+| **Session** | `$_SESSION['admin']` — terpisah dari session warga |
+
+### Fitur Admin
+| Halaman | URL | Fungsi |
+|---|---|---|
+| Login | `admin/login.php` | Login dengan username+password dari tabel `admins` |
+| Dashboard | `admin/dashboard.php` | Ringkasan data (pengaduan masuk, warga terdaftar) |
+| Kelola Banner | `admin/banner.php` | Upload/ganti 3 gambar slide beranda (JPG/PNG/WEBP, max 5MB) |
+| Edit Statistik | `admin/statistik.php` | Edit angka Penduduk, KK, Keseluruhan Layanan |
+| Logout | `admin/logout.php` | Hapus session admin |
+
+### Cara Kerja Banner
+- Gambar tersimpan di `assets/images/` dengan nama `slide{N}_{timestamp}.{ext}`
+- Referensi path disimpan di tabel `banner_slides` (kolom `posisi` 1-3, `filename`)
+- `index.php` membaca dari DB, fallback ke `bg3.png`, `bg1.jpg`, `bg2.png` jika DB kosong
+- File lama (non-default) otomatis dihapus saat upload baru
+
+### Cara Kerja Statistik
+- Data statistik disimpan di tabel `statistik_desa`
+- `admin/statistik.php` update via `INSERT ... ON DUPLICATE KEY UPDATE`
+- `index.php` membaca 3 kunci: `penduduk`, `kk`, `layanan_bulan`
+
+---
+
+## 🗂️ Struktur Folder (Aktual)
 
 ```
 desa_sungaibakaukecil/
